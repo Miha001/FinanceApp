@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+    finance.db:
+        image: postgres
+        container_name: financedb
+        environment:
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=admin
+            - POSTGRES_DB=financedb
+        restart: always
+        ports:
+            - "5432:5432"
+
+    finance.cache:
+        image: redis:latest
+        container_name: finance.cache
+        restart: always
+        ports:
+            - "6379:6379"
+        networks:
+            - financenw
+
+networks:
+    financenw:

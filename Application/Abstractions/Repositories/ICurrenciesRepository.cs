@@ -1,0 +1,31 @@
+﻿using Domain.Db.Entities;
+
+namespace Application.Abstractions.Repositories;
+
+/// <summary>
+/// Абстракция для взаимодействия с курсом валют через DbContext
+/// </summary>
+public interface ICurrenciesRepository : IBaseRepository<Currency>
+{
+    /// <summary>
+    ///  Получить все курсы валют
+    /// </summary>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task<IEnumerable<Currency>> GetAllAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Обновить список курсов валют
+    /// </summary>
+    /// <param name="currencies"></param>
+    /// <returns></returns>
+    void UpdateRange(IEnumerable<Currency> currencies);
+
+    /// <summary>
+    /// Добавить список курсов валют
+    /// </summary>
+    /// <param name="currencies"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    Task AddRangeAsync(IEnumerable<Currency> currencies, CancellationToken cancellationToken = default);
+}
