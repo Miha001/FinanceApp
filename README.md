@@ -43,6 +43,6 @@ currency
 
 ***Чтобы начать использовать систему нужно:***
 
-1. Прописать команду `docker compose up -d` в папке с файлом docker-compose.yml
+1. Прописать команду `docker compose up -d` в папке с файлом docker-compose.yml для БД и Redis(остальные API будут добавлены позже)
 2. Запустить MigrationsRunner для выполнения миграций БД
 3. Развернуть все API(Gateway, Users.API, Finances.API) и фоновый Worker
