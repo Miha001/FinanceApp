@@ -16,15 +16,6 @@ public interface ICacheService
     Task<T> GetObjectAsync<T>(string key) where T : class;
 
     /// <summary>
-    /// Попытка получить объект из кэша, если в кэше объекта нет, то получение объекта из БД с помощью фабрики.
-    /// </summary>
-    /// <typeparam name="T">То что хотим получить из кэша</typeparam>
-    /// <param name="key">Ключ кэша</param>
-    /// <param name="factory">Фабрика (запрос для БД).</param>
-    /// <returns></returns>
-    Task<T> GetOrAddToCache<T>(string key, Func<Task<T>> factory) where T : class;
-
-    /// <summary>
     /// Положить объект в хранилище кэша.
     /// </summary>
     /// <typeparam name="T"></typeparam>

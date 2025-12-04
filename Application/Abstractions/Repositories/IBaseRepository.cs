@@ -25,10 +25,4 @@ public interface IBaseRepository<TEntity> : IStateSaveChanges
     /// <param name="entity">Сущность для обновления.</param>
     /// <returns>Обновленная сущность.</returns>
     TEntity Update(TEntity entity);
-
-    /// <summary>
-    /// Удаляет сущность.
-    /// </summary>
-    /// <param name="entity">Сущность для удаления.</param>
-    void Remove(TEntity entity);
 }

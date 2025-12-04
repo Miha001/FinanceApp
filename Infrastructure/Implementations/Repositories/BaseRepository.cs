@@ -44,14 +44,6 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public void Remove(TEntity entity)
-    {
-        ValidateEntityOnNull(entity);
-
-        _dbSet.Remove(entity);
-    }
-
-    /// <inheritdoc/>
     public TEntity Update(TEntity entity)
     {
         ValidateEntityOnNull(entity);

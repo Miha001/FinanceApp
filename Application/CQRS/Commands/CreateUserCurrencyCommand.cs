@@ -10,5 +10,6 @@ public class CreateUserCurrencyHandler(IBaseRepository<UserCurrency> repository)
     public async Task Handle(CreateUserCurrencyCommand request, CancellationToken cancellationToken)
     {
         await repository.CreateAsync(new() { UserId = request.UserId, CurrencyId = request.CurrencyId });
+        await repository.SaveChangesAsync(cancellationToken);
     }
 }

@@ -37,21 +37,4 @@ public class CacheService(IDistributedCache cache) : ICacheService
         var data = await cache.GetAsync(key);
         return data != null ? JsonSerializer.Deserialize<T>(data) : default;
     }
-
-    /// <inheritdoc/>
-    public async Task<T> GetOrAddToCache<T>(string key, Func<Task<T>> factory) where T : class
-    {
-        T cachedValue = await GetObjectAsync<T>(key);
-
-        if (cachedValue != null)
-        {
-            return cachedValue;
-        }
-
-        cachedValue = await factory();
-
-        await SetObjectAsync(key, cachedValue);
-
-        return cachedValue;
-    }
 }
