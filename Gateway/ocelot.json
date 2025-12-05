@@ -3,7 +3,7 @@
     // 1. Маршруты Users.API
     {
       "DownstreamPathTemplate": "/api/Auth/register",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -17,7 +17,7 @@
 
     {
       "DownstreamPathTemplate": "/api/Auth/login",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -30,7 +30,7 @@
 
     {
       "DownstreamPathTemplate": "/api/Auth/logout",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -47,7 +47,7 @@
 
     {
       "DownstreamPathTemplate": "/api/UserToken/refreshToken",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -65,7 +65,7 @@
     // 2. Маршруты Finances.API
     {
       "DownstreamPathTemplate": "/api/Currencies/all",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -81,7 +81,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Currencies/courses",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -98,7 +98,7 @@
     },
     {
       "DownstreamPathTemplate": "/api/Currencies/favorites",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
