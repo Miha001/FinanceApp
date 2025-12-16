@@ -4,6 +4,7 @@ using DAL.Controller;
 using Domain.Constants.Route;
 using Domain.Models.Dto.Auth;
 using Domain.Result;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Users.API.Controllers;
@@ -41,10 +42,11 @@ public class AuthController(IAuthService authService,
     /// Выход пользователя из системы
     /// </summary>
     /// <returns></returns>
+    [Authorize]
     [HttpPost(Routes.Auth.Logout)]
     public async Task<IActionResult> Logout()
     {
-        var response = await authService.Logout(AuthorizedUserId);
+        var response = await authService.Logout(AuthorizedUserId, HttpContext);
 
         if (response.IsSuccess)
         {

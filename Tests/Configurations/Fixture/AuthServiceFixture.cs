@@ -42,7 +42,7 @@ public class AuthServiceFixture : IDisposable
             Audience = "test",
             Authority = "test",
             Key = "test",
-            RefreshTokenValidityInDays = 11
+            ExpirationInMinutes = 60
         };
 
         var jwtOptions = Options.Create(JwtSettings);

@@ -2,6 +2,7 @@
 using Domain.Models.Dto;
 using Domain.Models.Dto.Auth;
 using Domain.Result;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Abstractions.Services;
 
@@ -25,9 +26,9 @@ public interface IAuthService
     Task<DataResult<TokenDto>> Login(LoginUserDto dto);
 
     /// <summary>
-    /// Выход пользователя из системы
+    /// Выход пользователя из системы(заносим токен в blacklist)
     /// </summary>
     /// <param name="authorizedUserId"></param>
     /// <returns></returns>
-    Task<DataResult<bool>?> Logout(Guid authorizedUserId);
+    Task<DataResult<bool>?> Logout(Guid authorizedUserId, HttpContext httpContext);
 }

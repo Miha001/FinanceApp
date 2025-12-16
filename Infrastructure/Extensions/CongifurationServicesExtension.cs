@@ -1,9 +1,7 @@
 ﻿using Application.Abstractions.Helpers;
 using Application.Abstractions.Repositories;
 using Application.Abstractions.Services;
-using Application.CQRS.Queries;
 using Application.Validations.FluentValidator;
-using Asp.Versioning;
 using DAL.Implementations.Helpers;
 using DAL.Implementations.Services;
 using Domain.Db.Entities;
@@ -18,9 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using StackExchange.Redis;
 using System.Text;
-using static System.Collections.Specialized.BitVector32;
 
 namespace Infrastructure.Extensions;
 public static class CongifurationServicesExtension
@@ -61,7 +57,6 @@ public static class CongifurationServicesExtension
     {
         var types = new List<Type>()
         {
-            typeof(UserToken),
             typeof(User),
             typeof(Currency),
             typeof(UserCurrency),
@@ -122,7 +117,10 @@ public static class CongifurationServicesExtension
     /// <param name="services"></param>
     public static void AddAuthenticationAndAuthorization(this IServiceCollection services, WebApplicationBuilder builder)
     {
-        services.AddAuthorization();
+
+        var jwtOptions = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
+
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -130,23 +128,45 @@ public static class CongifurationServicesExtension
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(o =>
         {
-            var options = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
-            var jwtKey = options.Key;
-            var issuer = options.Issuer;
-            var audience = options.Audience;
-            o.Authority = options.Authority;
+            var jwtKey = jwtOptions.Key;
+            var issuer = jwtOptions.Issuer;
+            var audience = jwtOptions.Audience;
+
+            o.Authority = jwtOptions.Authority;
             o.RequireHttpsMetadata = false;
             o.TokenValidationParameters = new TokenValidationParameters()
             {
-                ValidIssuer = issuer,
-                ValidAudience = audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
                 ValidateAudience = true,
                 ValidateIssuer = true,
                 ValidateLifetime = true,
-                ValidateIssuerSigningKey = true
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = issuer,
+                ValidAudience = audience,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
             };
+
+        o.Events = new JwtBearerEvents
+        {
+
+            OnTokenValidated = async context =>
+            {
+
+                if (context.SecurityToken is Microsoft.IdentityModel.JsonWebTokens.JsonWebToken jwt)
+                {
+                    var cacheService = context.HttpContext.RequestServices.GetRequiredService<ICacheService>();
+
+                    string? value = await cacheService.GetObjectAsync<string?>(jwt.EncodedToken);
+
+                    if (value is not null)
+                    {
+                        context.Fail("Token is invalid");
+                        context.Response.Headers.Add("Token-Expired", "true");
+                    }
+                }
+            }};
         });
+
+        services.AddAuthorization();
     }
 
     /// <summary>
@@ -162,7 +182,6 @@ public static class CongifurationServicesExtension
             {
                 In = ParameterLocation.Header,
                 Description = "Please enter a valid token",
-                Name = "Authorization",
                 Type = SecuritySchemeType.Http,
                 BearerFormat = "JWT",
                 Scheme = "Bearer"

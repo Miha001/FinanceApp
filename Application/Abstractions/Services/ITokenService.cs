@@ -11,29 +11,9 @@ namespace Application.Abstractions.Services;
 public interface ITokenService
 {
     /// <summary>
-    /// Генерация Access-токена.
+    /// Генерация токена.
     /// </summary>
-    /// <param name="claims"></param>
+    /// <param name="user">Текущий пользователь</param>
     /// <returns></returns>
-    string GenerateAccessToken(IEnumerable<Claim> claims);
-
-    /// <summary>
-    /// Генерация Refresh-токена.
-    /// </summary>
-    /// <returns></returns>
-    string GenerateRefreshToken();
-
-    /// <summary>
-    /// Обновление токена пользователя.
-    /// </summary>
-    /// <param name="dto"></param>
-    /// <returns></returns>
-    Task<DataResult<TokenDto>> RefreshToken(TokenDto dto);
-
-    /// <summary>
-    /// Получение основных клаймов из пользователя.
-    /// </summary>
-    /// <param name="user"></param>
-    /// <returns></returns>
-    List<Claim> GetClaimsFromUser(User user);
+    string Create(User user);
 }

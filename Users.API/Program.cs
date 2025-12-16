@@ -1,11 +1,8 @@
 using Application.Abstractions;
-using Application.Abstractions.Helpers;
 using Application.Abstractions.Services;
 using Application.Abstractions.Validators;
 using Application.Validations;
-using DAL.Implementations.Helpers;
 using DAL.Implementations.Services;
-using Infrastructure.Db.Context;
 using Infrastructure.Extensions;
 using Infrastructure.Implementations.Services;
 using Infrastructure.Middlewares;
@@ -34,8 +31,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

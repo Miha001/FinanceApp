@@ -3,7 +3,7 @@
 /// <summary>
 /// Настройки Jwt-токена
 /// </summary>
-public class JwtSettings
+public record JwtSettings
 {
     public string Issuer { get; set; }
 
@@ -13,7 +13,5 @@ public class JwtSettings
 
     public string Key { get; set; }
 
-    public int AccessTokenValidityInDays { get; set; }
-
-    public int RefreshTokenValidityInDays { get; set; }
+    public int ExpirationInMinutes { get; set; }
 }

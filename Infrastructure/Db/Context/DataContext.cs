@@ -20,7 +20,6 @@ public class DataContext(DbContextOptions<DataContext> options, IConfiguration c
     public DbSet<User> User { get; set; }
     public DbSet<Currency> Currency { get; set; }
     public DbSet<UserCurrency> UserCurrencies { get; set; }
-    public DbSet<UserToken> UserTokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
         optionsBuilder.UseNpgsql(configuration.GetConnectionString("Default"), b => b.EnableRetryOnFailure()
@@ -29,6 +28,5 @@ public class DataContext(DbContextOptions<DataContext> options, IConfiguration c
     protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder
         .ApplyConfiguration(new UserConfiguration())
         .ApplyConfiguration(new CurrencyConfiguration())
-        .ApplyConfiguration(new UserTokenConfiguration())
         .ApplyConfiguration(new UserCurrencyConfiguration());
 }

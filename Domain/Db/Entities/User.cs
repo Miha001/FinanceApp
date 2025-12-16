@@ -14,10 +14,5 @@ public class User : IEntityId<Guid>
     /// </summary>
     public string Password { get; set; }
 
-    /// <summary>
-    /// Refresh-токен пользователя.
-    /// </summary>
-    public UserToken UserToken { get; set; }
-
     public virtual ICollection<UserCurrency> UserCurrencies { get; set; }
 }

@@ -23,25 +23,24 @@ public class AuthServiceTests(AuthServiceFixture fixture) : IClassFixture<AuthSe
         fixture.AuthValidatorMock.Setup(v => v.ValidateLogin(It.IsAny<User>(), It.IsAny<string>()))
             .Returns(BaseResult.Success());
 
-        fixture.TokenServiceMock.Setup(t => t.GetClaimsFromUser(It.IsAny<User>()))
-            .Returns(new List<Claim> { new Claim(ClaimTypes.Name, "testuser") });
+        //fixture.TokenServiceMock.Setup(t => t.GetClaimsFromUser(It.IsAny<User>()))
+        //    .Returns(new List<Claim> { new Claim(ClaimTypes.Name, "testuser") });
 
-        fixture.TokenServiceMock.Setup(t => t.GenerateAccessToken(It.IsAny<IEnumerable<Claim>>()))
-            .Returns("access_token");
+        //fixture.TokenServiceMock.Setup(t => t.GenerateAccessToken(It.IsAny<IEnumerable<Claim>>()))
+        //    .Returns("access_token");
 
-        fixture.TokenServiceMock.Setup(t => t.GenerateRefreshToken())
-            .Returns("refresh_token");
+        //fixture.TokenServiceMock.Setup(t => t.GenerateRefreshToken())
+        //    .Returns("refresh_token");
 
-        fixture.MediatorMock.Setup(m => m.Send(It.IsAny<GetUserTokenByUserIdQuery>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync((UserToken)null);
+        //fixture.MediatorMock.Setup(m => m.Send(It.IsAny<GetUserTokenByUserIdQuery>(), It.IsAny<CancellationToken>()))
+        //    .ReturnsAsync((UserToken)null);
 
         // Act
         var result = await fixture.AuthService.Login(loginDto);
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal("access_token", result.Data.AccessToken);
-        Assert.Equal("refresh_token", result.Data.RefreshToken);
+        Assert.Equal("access_token", result.Data.JWT);
     }
 
 

@@ -5,7 +5,6 @@ using Application.CQRS.Commands;
 using Application.CQRS.Queries;
 using Application.Resources;
 using Domain.Constants;
-using Domain.Db.Entities;
 using Domain.Enum;
 using Domain.Models;
 using Domain.Models.Dto;
@@ -13,6 +12,9 @@ using Domain.Models.Dto.Auth;
 using Domain.Result;
 using Domain.Settings;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using ILogger = Serilog.ILogger;
 
@@ -37,36 +39,26 @@ public class AuthService(IMediator mediator,
             return DataResult<TokenDto>.Failure((int)validateLoginResult.Error.Code, validateLoginResult.Error.Message);
         }
     
-        var claims = tokenService.GetClaimsFromUser(user);
-    
-        var accessToken = tokenService.GenerateAccessToken(claims);
-        var refreshToken = tokenService.GenerateRefreshToken();
-    
-        var userToken = await mediator.Send(new GetUserTokenByUserIdQuery(user.Id));
-    
-        if (userToken == null)
-        {
-            await mediator.Send(new CreateUserTokenCommand(user.Id, refreshToken, jwtOptions.Value.RefreshTokenValidityInDays));
-        }
-        else
-        {
-            await mediator.Send(new UpdateUserTokenCommand(userToken, refreshToken));
-        }
+        var token = tokenService.Create(user);
     
         return DataResult<TokenDto>.Success(new TokenDto()
         {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken,
+            JWT = token,
         });
     }
 
     /// <inheritdoc/>
-    public async Task<DataResult<bool>?> Logout(Guid authorizedUserId)
+    public async Task<DataResult<bool>?> Logout(Guid authorizedUserId, HttpContext httpContext)
     {
         try
         {
-            await cacheService.RemoveAsync(CacheKeys.Users);
+            var token = await httpContext.GetTokenAsync("access_token");
+
+            //Кладём токен в black-list //TODO: указывать в TTL время жизни токена
+            await cacheService.SetObjectAsync(token, authorizedUserId.ToString(),
+                new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60) });
         }
+
         catch(Exception e)
         {
             return DataResult<bool>.Failure((int)ErrorCodes.LogoutFailed, ErrorMessages.LogoutFailed);
@@ -91,8 +83,6 @@ public class AuthService(IMediator mediator,
             user = await mediator.Send(new CreateUserCommand(dto.Name, dto.Password));
     
             await unitOfWork.SaveChangesAsync();
-    
-            await cacheService.RemoveAsync(CacheKeys.Users);
         }
         catch (Exception ex)
         {
