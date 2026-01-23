@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Shared;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 

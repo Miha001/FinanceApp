@@ -1,9 +1,9 @@
-﻿using Finances.Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
 using Finances.Domain.Db.Entities;
 using MediatR;
 
-namespace Finances.Application.CQRS.Commands;
+namespace Finances.Application.Abstractions.Users.Commands;
 
 /// <summary>
 /// Создание пользователя при регистрации.

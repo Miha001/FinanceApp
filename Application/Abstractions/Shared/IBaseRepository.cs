@@ -1,4 +1,4 @@
-﻿namespace Finances.Application.Abstractions.Repositories;
+﻿namespace Finances.Application.Abstractions.Shared;
 
 /// <summary>
 /// Абстракция для взаимодействия с базой данных, через DbContext.

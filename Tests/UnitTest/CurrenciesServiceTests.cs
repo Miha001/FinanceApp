@@ -1,5 +1,5 @@
-﻿using Application.CQRS.Commands;
-using Finances.Application.CQRS.Queries;
+﻿using Finances.Application.Abstractions.Currencies.Queries;
+using Finances.Application.Abstractions.Users.Commands;
 using Finances.Domain.Db.Entities;
 using Moq;
 using Tests.Configurations.Fixture;

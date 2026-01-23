@@ -1,5 +1,5 @@
-﻿using Finances.Application.Abstractions;
-using Finances.Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Services;
+using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Validators;
 using Finances.DAL.Implementations.Users;
 using Finances.Domain.Settings;

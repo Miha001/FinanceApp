@@ -1,6 +1,6 @@
 ﻿using Finances.Domain.Db.Entities;
 
-namespace Finances.Application.Abstractions.Services;
+namespace Finances.Application.Abstractions.Shared;
 
 /// <summary>
 /// Сервис для работы с токенами.

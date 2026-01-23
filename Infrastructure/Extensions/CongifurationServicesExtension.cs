@@ -1,5 +1,4 @@
-﻿using Finances.Application.Abstractions.Repositories;
-using Finances.Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
 using Finances.Application.Validations.FluentValidator;
 using Finances.DAL.Implementations.Shared;

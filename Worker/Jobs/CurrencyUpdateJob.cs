@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Currencies;
 using Finances.Domain.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

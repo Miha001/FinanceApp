@@ -1,5 +1,5 @@
-﻿using Finances.Application.Abstractions;
-using Finances.Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Services;
+using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Validators;
 using Finances.Application.CQRS.Commands;
 using Finances.Application.CQRS.Queries;

@@ -1,5 +1,5 @@
 using Finances.Application;
-using Finances.Application.Abstractions.Services;
+using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Validators;
 using Finances.Application.Validations;
 using Finances.DAL.Implementations.Carrencies;

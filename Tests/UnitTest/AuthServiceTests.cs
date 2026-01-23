@@ -1,4 +1,4 @@
-﻿using Finances.Application.CQRS.Queries;
+﻿using Finances.Application.Abstractions.Users.Queries;
 using Finances.Domain.Db.Entities;
 using Finances.Domain.Enum;
 using Finances.Domain.Models.Dto.Auth;

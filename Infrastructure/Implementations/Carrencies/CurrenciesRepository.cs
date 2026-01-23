@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Currencies;
 using Finances.DAL.Implementations.Shared;
 using Finances.Domain.Db.Entities;
 using Finances.Infrastructure.Db.Context;

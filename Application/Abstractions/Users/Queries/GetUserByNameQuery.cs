@@ -1,9 +1,9 @@
-﻿using Finances.Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Shared;
 using Finances.Domain.Db.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Finances.Application.CQRS.Queries;
+namespace Finances.Application.Abstractions.Users.Queries;
 public sealed record GetUserByNameQuery(string Name, bool AsNoTracking = false) : IRequest<User>;
 
 public class GetUserByNameQueryHandler(IBaseRepository<User> userRepository) : IRequestHandler<GetUserByNameQuery, User>

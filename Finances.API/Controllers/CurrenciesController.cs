@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Currencies;
 using Finances.Domain.Constants.Route;
 using Finances.Domain.Models.VM;
 using Finances.Domain.Result;

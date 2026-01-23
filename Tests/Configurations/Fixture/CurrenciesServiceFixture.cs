@@ -1,5 +1,5 @@
-﻿using Application.CQRS.Commands;
-using Finances.Application.CQRS.Queries;
+﻿using Finances.Application.Abstractions.Currencies.Queries;
+using Finances.Application.Abstractions.Users.Commands;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.Domain.Db.Entities;
 using MediatR;

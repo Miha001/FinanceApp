@@ -1,7 +1,7 @@
 ﻿using Finances.Domain.Models.VM;
 using Finances.Domain.Result;
 
-namespace Finances.Application.Abstractions.Services;
+namespace Finances.Application.Abstractions.Currencies;
 
 /// <summary>
 /// Сервисы для работы с курсами валют

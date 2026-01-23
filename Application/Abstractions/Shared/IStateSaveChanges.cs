@@ -1,4 +1,4 @@
-﻿namespace Finances.Application.Abstractions.Repositories;
+﻿namespace Finances.Application.Abstractions.Shared;
 
 /// <summary>
 /// Интерфейс для реализации сохранения состояния сущностей.

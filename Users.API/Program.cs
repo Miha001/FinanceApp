@@ -3,10 +3,10 @@ using Finances.Application;
 using Finances.Application.Validations;
 using Finances.Application.Abstractions.Services;
 using Finances.DAL.Implementations.Users;
-using Finances.Application.Abstractions;
 using Finances.DAL.Implementations.Shared;
 using Finances.Application.Abstractions.Validators;
 using Finances.Infrastructure.Extensions;
+using Finances.Application.Abstractions.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 

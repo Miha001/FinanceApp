@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 
-namespace Finances.Application.Abstractions.Services;
+namespace Finances.Application.Abstractions.Shared;
 
 /// <summary>
 /// Сервис для работы с кэшированием

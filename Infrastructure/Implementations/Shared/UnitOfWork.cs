@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions;
+﻿using Finances.Application.Abstractions.Shared;
 using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 

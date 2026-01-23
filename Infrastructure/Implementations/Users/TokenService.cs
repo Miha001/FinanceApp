@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Shared;
 using Finances.Domain.Db.Entities;
 using Finances.Domain.Settings;
 using Microsoft.Extensions.Options;

@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Currencies;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.Infrastructure.Db.Context;
 using Microsoft.Extensions.Configuration;

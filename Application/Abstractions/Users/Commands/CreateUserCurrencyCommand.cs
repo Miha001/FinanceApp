@@ -1,8 +1,8 @@
-﻿using Finances.Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Shared;
 using Finances.Domain.Db.Entities;
 using MediatR;
 
-namespace Application.CQRS.Commands;
+namespace Finances.Application.Abstractions.Users.Commands;
 public sealed record CreateUserCurrencyCommand(Guid UserId, Guid CurrencyId) : IRequest;
 
 public class CreateUserCurrencyHandler(IBaseRepository<UserCurrency> repository) : IRequestHandler<CreateUserCurrencyCommand>
