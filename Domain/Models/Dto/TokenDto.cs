@@ -3,7 +3,7 @@
 /// <summary>
 /// Модель данных для отображения токена.
 /// </summary>
-public class TokenDto
+public record TokenDto
 {
     public string JWT { get; set; }
 }

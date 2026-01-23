@@ -33,12 +33,12 @@ public class AuthValidator(IPasswordHasher passwordHasher) : IAuthValidator
     {
         if (enteredPassword != enteredPasswordConfirm)
         {
-            return DataResult<UserDto>.Failure((int)ErrorCodes.PasswordNotEqualsPasswordConfirm, ErrorMessages.PasswordNotEqualsPasswordConfirm);
+            return DataResult<RegisteredUserDto>.Failure((int)ErrorCodes.PasswordNotEqualsPasswordConfirm, ErrorMessages.PasswordNotEqualsPasswordConfirm);
         }
 
         if (user != null)
         {
-            return DataResult<UserDto>.Failure((int)ErrorCodes.UserAlreadyExists, ErrorMessages.UserAlreadyExists);
+            return DataResult<RegisteredUserDto>.Failure((int)ErrorCodes.UserAlreadyExists, ErrorMessages.UserAlreadyExists);
         }
 
         return BaseResult.Success();

@@ -3,7 +3,7 @@
 /// <summary>
 /// Модель данных для авторизации пользователя.
 /// </summary>
-public class LoginUserDto
+public record LoginUserDto
 {
     /// <summary>
     /// Имя пользователя

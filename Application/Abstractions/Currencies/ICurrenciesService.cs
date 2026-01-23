@@ -1,4 +1,4 @@
-﻿using Finances.Domain.Models.VM;
+﻿using Finances.Domain.Models.Dto;
 using Finances.Domain.Result;
 
 namespace Finances.Application.Abstractions.Currencies;
@@ -9,6 +9,6 @@ namespace Finances.Application.Abstractions.Currencies;
 public interface ICurrenciesService
 {
     Task<DataResult<bool>> AddToFavorites(Guid userId, Guid currencyId);
-    Task<CollectionResult<CourseVM>> GetAll();
-    Task<CollectionResult<CourseVM>> GetCoursesByUserId(Guid userId);
+    Task<CollectionResult<CourseDto>> GetAll();
+    Task<CollectionResult<CourseDto>> GetCoursesByUserId(Guid userId);
 }

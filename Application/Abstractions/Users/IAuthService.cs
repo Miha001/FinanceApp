@@ -1,5 +1,4 @@
-﻿using Finances.Domain.Models;
-using Finances.Domain.Models.Dto;
+﻿using Finances.Domain.Models.Dto;
 using Finances.Domain.Models.Dto.Auth;
 using Finances.Domain.Result;
 using Microsoft.AspNetCore.Http;
@@ -16,7 +15,7 @@ public interface IAuthService
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    Task<DataResult<UserVM>> Register(RegisterUserDto dto);
+    Task<DataResult<UserNameDto>> Register(RegisterUserDto dto);
 
     /// <summary>
     /// Авторизация пользователя.

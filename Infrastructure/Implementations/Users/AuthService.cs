@@ -4,7 +4,6 @@ using Finances.Application.Abstractions.Users.Commands;
 using Finances.Application.Abstractions.Users.Queries;
 using Finances.Application.Abstractions.Validators;
 using Finances.Domain.Enum;
-using Finances.Domain.Models;
 using Finances.Domain.Models.Dto;
 using Finances.Domain.Models.Dto.Auth;
 using Finances.Domain.Resources;
@@ -67,14 +66,14 @@ public class AuthService(IMediator mediator,
     }
 
     /// <inheritdoc/>   
-    public async Task<DataResult<UserVM>> Register(RegisterUserDto dto)
+    public async Task<DataResult<UserNameDto>> Register(RegisterUserDto dto)
     {
         var user = await mediator.Send(new GetUserByNameQuery(dto.Name));
     
         var validateRegisterResult = authValidator.ValidateRegister(user, enteredPassword: dto.Password, enteredPasswordConfirm: dto.PasswordConfirm);
         if (!validateRegisterResult.IsSuccess)
         {
-            return DataResult<UserVM>.Failure((int)validateRegisterResult.Error.Code, validateRegisterResult.Error.Message);
+            return DataResult<UserNameDto>.Failure((int)validateRegisterResult.Error.Code, validateRegisterResult.Error.Message);
         }
 
         try
@@ -86,13 +85,11 @@ public class AuthService(IMediator mediator,
         catch (Exception ex)
         {
             logger.Error(ex, ex.Message);
-            return DataResult<UserVM>.Failure((int)ErrorCodes.RegistrationFailed, ErrorMessages.RegistrationFailed);
+            return DataResult<UserNameDto>.Failure((int)ErrorCodes.RegistrationFailed, ErrorMessages.RegistrationFailed);
         }
 
-        var newUser = new UserVM
-        {
-            Name = user.Name,   
-        };
-        return DataResult<UserVM>.Success(newUser);
+        var newUser = new UserNameDto(user.Name);
+
+        return DataResult<UserNameDto>.Success(newUser);
     }
 }
