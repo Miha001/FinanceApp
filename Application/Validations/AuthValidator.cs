@@ -1,9 +1,9 @@
 ﻿using Finances.Application.Abstractions.Users;
 using Finances.Application.Abstractions.Validators;
-using Finances.Application.Resources;
 using Finances.Domain.Db.Entities;
 using Finances.Domain.Enum;
 using Finances.Domain.Models.Dto;
+using Finances.Domain.Resources;
 using Finances.Domain.Result;
 
 namespace Finances.Application.Validations;

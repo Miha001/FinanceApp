@@ -1,6 +1,6 @@
-﻿using Application.CQRS.Commands;
-using Finances.Application.Abstractions.Currencies;
-using Finances.Application.CQRS.Queries;
+﻿using Finances.Application.Abstractions.Currencies;
+using Finances.Application.Abstractions.Currencies.Queries;
+using Finances.Application.Abstractions.Users.Commands;
 using Finances.Domain.Db.Entities;
 using Finances.Domain.Models.VM;
 using Finances.Domain.Result;

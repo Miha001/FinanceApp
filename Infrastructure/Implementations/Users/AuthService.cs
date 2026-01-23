@@ -1,13 +1,13 @@
 ﻿using Finances.Application.Abstractions.Services;
 using Finances.Application.Abstractions.Shared;
+using Finances.Application.Abstractions.Users.Commands;
+using Finances.Application.Abstractions.Users.Queries;
 using Finances.Application.Abstractions.Validators;
-using Finances.Application.CQRS.Commands;
-using Finances.Application.CQRS.Queries;
-using Finances.Application.Resources;
 using Finances.Domain.Enum;
 using Finances.Domain.Models;
 using Finances.Domain.Models.Dto;
 using Finances.Domain.Models.Dto.Auth;
+using Finances.Domain.Resources;
 using Finances.Domain.Result;
 using Finances.Domain.Settings;
 using MediatR;
