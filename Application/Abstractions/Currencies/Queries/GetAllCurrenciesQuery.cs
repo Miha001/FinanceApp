@@ -8,8 +8,8 @@ public sealed record GetAllCurrenciesQuery() : IRequest<List<Currency>>;
 
 public class GetAllCurrenciesHandler(IBaseRepository<Currency> repository) : IRequestHandler<GetAllCurrenciesQuery, List<Currency>>
 {
-    public Task<List<Currency>> Handle(GetAllCurrenciesQuery request, CancellationToken cancellationToken)
+    public Task<List<Currency>> Handle(GetAllCurrenciesQuery request, CancellationToken ct)
     {
-        return repository.Query(false).ToListAsync();
+        return repository.Query(false).ToListAsync(ct);
     }
 }

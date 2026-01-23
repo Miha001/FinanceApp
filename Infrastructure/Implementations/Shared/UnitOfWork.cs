@@ -6,14 +6,14 @@ namespace Finances.DAL.Implementations.Shared;
 public class UnitOfWork(DataContext dbContext) : IUnitOfWork
 {
     /// <inheritdoc/>
-    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken token = default)
+    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken ct = default)
     {
-        return await dbContext.Database.BeginTransactionAsync(token);
+        return await dbContext.Database.BeginTransactionAsync(ct);
     }
 
     /// <inheritdoc/>
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
-        return await dbContext.SaveChangesAsync(cancellationToken);
+        return await dbContext.SaveChangesAsync(ct);
     }
 }

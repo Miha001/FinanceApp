@@ -28,9 +28,9 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
-        return await _dbContext.SaveChangesAsync(cancellationToken);
+        return await _dbContext.SaveChangesAsync(ct);
     }
 
     /// <inheritdoc/>
