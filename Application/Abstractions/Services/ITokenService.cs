@@ -1,9 +1,6 @@
-﻿using Domain.Db.Entities;
-using Domain.Models.Dto;
-using Domain.Result;
-using System.Security.Claims;
+﻿using Finances.Domain.Db.Entities;
 
-namespace Application.Abstractions.Services;
+namespace Finances.Application.Abstractions.Services;
 
 /// <summary>
 /// Сервис для работы с токенами.

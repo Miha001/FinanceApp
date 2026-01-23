@@ -1,4 +1,4 @@
-﻿namespace Domain.Result;
+﻿namespace Finances.Domain.Result;
 
 /// <summary>
 /// Ошибка, которая создаётся в BaseResult

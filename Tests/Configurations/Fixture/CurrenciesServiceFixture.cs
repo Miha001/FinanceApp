@@ -1,7 +1,7 @@
 ﻿using Application.CQRS.Commands;
-using Application.CQRS.Queries;
-using DAL.Implementations.Services;
-using Domain.Db.Entities;
+using Finances.Application.CQRS.Queries;
+using Finances.DAL.Implementations.Carrencies;
+using Finances.Domain.Db.Entities;
 using MediatR;
 using Moq;
 

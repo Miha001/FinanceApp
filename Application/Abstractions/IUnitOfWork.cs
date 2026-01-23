@@ -1,7 +1,7 @@
-﻿using Application.Abstractions.Repositories;
+﻿using Finances.Application.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Application.Abstractions;
+namespace Finances.Application.Abstractions;
 
 /// <summary>
 /// Позволяет реализовать транзакцию EF Core.

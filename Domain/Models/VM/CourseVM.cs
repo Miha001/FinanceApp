@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.VM;
+﻿namespace Finances.Domain.Models.VM;
 public class CourseVM
 {
     /// <summary>

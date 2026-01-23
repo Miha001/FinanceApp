@@ -1,10 +1,10 @@
-﻿using Application.Abstractions.Repositories;
-using Domain.Db.Entities;
-using Infrastructure.Db.Context;
-using Infrastructure.Implementations.Repositories;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.DAL.Implementations.Shared;
+using Finances.Domain.Db.Entities;
+using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace DAL.Implementations.Repositories;
+namespace Finances.DAL.Implementations.Carrencies;
 public class CurrenciesRepository(DataContext dataContext) : BaseRepository<Currency>(dataContext), ICurrenciesRepository
 {
     ///<inheritdoc/>

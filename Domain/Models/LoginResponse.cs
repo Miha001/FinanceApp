@@ -1,4 +1,4 @@
-﻿namespace Domain.Models;
+﻿namespace Finances.Domain.Models;
 public record LoginResponse
 {
     public required string JwtToken { get; set; }

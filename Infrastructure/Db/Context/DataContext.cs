@@ -1,10 +1,11 @@
-﻿using DAL.Db.Context.EntityTypeConfigurations;
-using Domain.Db.Context.EntityTypeConfigurations;
-using Domain.Db.Entities;
+﻿using Domain.Db.Context.EntityTypeConfigurations;
+using Finances.DAL.Db.Context.EntityTypeConfigurations;
+using Finances.Domain.Db.Context.EntityTypeConfigurations;
+using Finances.Domain.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Db.Context;
+namespace Finances.Infrastructure.Db.Context;
 
 /// <summary>
 /// Контекст БД Postgres

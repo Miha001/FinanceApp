@@ -1,7 +1,6 @@
-﻿
-using Domain.Models.Dto;
+﻿using Finances.Domain.Models.Dto;
 
-namespace Domain.Result;
+namespace Finances.Domain.Result;
 
 /// <summary>
 /// Класс для реализации паттерна Result Pattern.

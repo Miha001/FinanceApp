@@ -1,6 +1,6 @@
-﻿using Domain.Db.Entities;
+﻿using Finances.Domain.Db.Entities;
 
-namespace Application.Abstractions.Repositories;
+namespace Finances.Application.Abstractions.Repositories;
 
 /// <summary>
 /// Абстракция для взаимодействия с курсом валют через DbContext

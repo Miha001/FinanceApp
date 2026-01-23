@@ -1,4 +1,4 @@
-﻿namespace Domain.Db.Entities;
+﻿namespace Finances.Domain.Db.Entities;
 public class Currency : IEntityId<Guid>
 {
     /// <summary>

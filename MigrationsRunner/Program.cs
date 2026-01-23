@@ -1,4 +1,4 @@
-﻿using Infrastructure.Db.Context;
+﻿using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;

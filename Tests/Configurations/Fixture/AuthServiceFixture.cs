@@ -1,8 +1,8 @@
-﻿using Application.Abstractions;
-using Application.Abstractions.Services;
-using Application.Abstractions.Validators;
-using Domain.Settings;
-using Infrastructure.Implementations.Services;
+﻿using Finances.Application.Abstractions;
+using Finances.Application.Abstractions.Services;
+using Finances.Application.Abstractions.Validators;
+using Finances.DAL.Implementations.Users;
+using Finances.Domain.Settings;
 using MediatR;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -25,7 +25,6 @@ public class AuthServiceFixture : IDisposable
     public JwtSettings JwtSettings { get; }
 
     public IAuthService AuthService { get; }
-
 
     public AuthServiceFixture()
     {

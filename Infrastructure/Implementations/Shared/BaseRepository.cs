@@ -1,8 +1,8 @@
-﻿using Application.Abstractions.Repositories;
-using Infrastructure.Db.Context;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Implementations.Repositories;
+namespace Finances.DAL.Implementations.Shared;
 
 public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     where TEntity : class

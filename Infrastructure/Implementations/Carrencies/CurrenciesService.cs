@@ -1,13 +1,12 @@
-﻿using Application.Abstractions.Services;
-using Application.CQRS.Commands;
-using Application.CQRS.Queries;
-using Application.Resources;
-using Domain.Db.Entities;
-using Domain.Models.VM;
-using Domain.Result;
+﻿using Application.CQRS.Commands;
+using Finances.Application.Abstractions.Services;
+using Finances.Application.CQRS.Queries;
+using Finances.Domain.Db.Entities;
+using Finances.Domain.Models.VM;
+using Finances.Domain.Result;
 using MediatR;
 
-namespace DAL.Implementations.Services;
+namespace Finances.DAL.Implementations.Carrencies;
 public class CurrenciesService(IMediator mediator) : ICurrenciesService
 {
     public async Task<DataResult<bool>> AddToFavorites(Guid userId, Guid currencyId)

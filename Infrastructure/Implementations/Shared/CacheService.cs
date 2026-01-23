@@ -1,8 +1,8 @@
-﻿using Application.Abstractions.Services;
+﻿using Finances.Application.Abstractions.Services;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 
-namespace DAL.Implementations.Services;
+namespace Finances.DAL.Implementations.Shared;
 
 public class CacheService(IDistributedCache cache) : ICacheService
 {

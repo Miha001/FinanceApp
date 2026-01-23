@@ -1,9 +1,9 @@
-﻿using Domain.Constants.Validation;
-using Domain.Extensions;
-using Domain.Models.Dto.Auth;
+﻿using Domain.Extensions;
+using Finances.Domain.Constants.Validation;
+using Finances.Domain.Models.Dto.Auth;
 using FluentValidation;
 
-namespace Application.Validations.FluentValidator;
+namespace Finances.Application.Validations.FluentValidator;
 public class RegisterUserValidator : AbstractValidator<RegisterUserDto>
 {
     public RegisterUserValidator()

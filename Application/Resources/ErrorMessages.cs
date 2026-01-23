@@ -1,4 +1,4 @@
-﻿namespace Application.Resources;
+﻿namespace Finances.Application.Resources;
 public class ErrorMessages
 {
     public static string RegistrationFailed = "Ошибка регистрации";

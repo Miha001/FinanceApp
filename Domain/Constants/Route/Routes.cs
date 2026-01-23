@@ -1,4 +1,4 @@
-﻿namespace Domain.Constants.Route;
+﻿namespace Finances.Domain.Constants.Route;
 
 /// <summary>
 /// Константы для указания понятного роута в контроллерах.

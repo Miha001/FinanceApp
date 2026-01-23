@@ -1,4 +1,4 @@
-﻿namespace Domain.Constants.Validation;
+﻿namespace Finances.Domain.Constants.Validation;
 
 /// <summary>
 /// Класс для хранения констант для ограничений сущностей и моделей в валидаторах.

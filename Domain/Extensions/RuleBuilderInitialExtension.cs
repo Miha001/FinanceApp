@@ -1,4 +1,4 @@
-﻿using Domain.Constants.Validation;
+﻿using Finances.Domain.Constants.Validation;
 using FluentValidation;
 
 namespace Domain.Extensions;

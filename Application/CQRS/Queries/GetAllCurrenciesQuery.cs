@@ -1,9 +1,9 @@
-﻿using Application.Abstractions.Repositories;
-using Domain.Db.Entities;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.Domain.Db.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Queries;
+namespace Finances.Application.CQRS.Queries;
 public sealed record GetAllCurrenciesQuery() : IRequest<List<Currency>>;
 
 public class GetAllCurrenciesHandler(IBaseRepository<Currency> repository) : IRequestHandler<GetAllCurrenciesQuery, List<Currency>>

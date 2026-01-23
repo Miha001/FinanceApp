@@ -1,12 +1,12 @@
-﻿using Application.Abstractions.Helpers;
-using Application.Abstractions.Validators;
-using Application.Resources;
-using Domain.Db.Entities;
-using Domain.Enum;
-using Domain.Models.Dto;
-using Domain.Result;
+﻿using Finances.Application.Abstractions.Users;
+using Finances.Application.Abstractions.Validators;
+using Finances.Application.Resources;
+using Finances.Domain.Db.Entities;
+using Finances.Domain.Enum;
+using Finances.Domain.Models.Dto;
+using Finances.Domain.Result;
 
-namespace Application.Validations;
+namespace Finances.Application.Validations;
 
 public class AuthValidator(IPasswordHasher passwordHasher) : IAuthValidator
 {

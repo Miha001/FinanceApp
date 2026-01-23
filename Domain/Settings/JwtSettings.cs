@@ -1,4 +1,4 @@
-﻿namespace Domain.Settings;
+﻿namespace Finances.Domain.Settings;
 
 /// <summary>
 /// Настройки Jwt-токена

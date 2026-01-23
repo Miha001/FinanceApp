@@ -1,9 +1,9 @@
-﻿using Application.Abstractions.Repositories;
-using Domain.Db.Entities;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.Domain.Db.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.CQRS.Queries;
+namespace Finances.Application.CQRS.Queries;
 public sealed record GetCurrenciesByUserIdQuery(Guid UserId) : IRequest<IEnumerable<Currency>>;
 
 public class GetCurrenciesByUserIdHandler(IBaseRepository<User> repository) : IRequestHandler<GetCurrenciesByUserIdQuery, IEnumerable<Currency>>

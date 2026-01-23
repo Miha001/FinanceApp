@@ -1,5 +1,5 @@
-﻿using Application.Abstractions.Repositories;
-using Domain.Db.Entities;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.Domain.Db.Entities;
 using MediatR;
 
 namespace Application.CQRS.Commands;

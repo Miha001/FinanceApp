@@ -1,6 +1,6 @@
 ﻿using Application.CQRS.Commands;
-using Application.CQRS.Queries;
-using Domain.Db.Entities;
+using Finances.Application.CQRS.Queries;
+using Finances.Domain.Db.Entities;
 using Moq;
 using Tests.Configurations.Fixture;
 

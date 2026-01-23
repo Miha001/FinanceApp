@@ -3,23 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36616.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{09317540-B77C-48A5-8473-0CD1B2807158}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.Domain", "Domain\Finances.Domain.csproj", "{09317540-B77C-48A5-8473-0CD1B2807158}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users.API", "Users.API\Users.API.csproj", "{3144838B-072E-8C27-9E4C-D40C0DE23ACB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.Users.API", "Users.API\Finances.Users.API.csproj", "{3144838B-072E-8C27-9E4C-D40C0DE23ACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.API", "Finances.API\Finances.API.csproj", "{A6A3732A-3250-721D-EA8D-BBDD6C3E8F7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.csproj", "{2CADB68C-FB3B-D474-56C8-AE901F365B9C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.Gateway", "Gateway\Finances.Gateway.csproj", "{2CADB68C-FB3B-D474-56C8-AE901F365B9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Worker", "Worker\Worker.csproj", "{CEE20C1A-613C-4E4D-9BBE-8D9099CDC571}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.Worker", "Worker\Finances.Worker.csproj", "{CEE20C1A-613C-4E4D-9BBE-8D9099CDC571}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationsRunner", "MigrationsRunner\MigrationsRunner.csproj", "{2CAD198E-BC05-429D-A54C-42033CD66CCE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.MigrationsRunner", "MigrationsRunner\Finances.MigrationsRunner.csproj", "{2CAD198E-BC05-429D-A54C-42033CD66CCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{DE21AC58-D507-4B80-92DA-17792AD2EC29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.Application", "Application\Finances.Application.csproj", "{DE21AC58-D507-4B80-92DA-17792AD2EC29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "Infrastructure\DAL.csproj", "{B644B239-6DAB-4A0F-98BB-4D979E362754}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finances.DAL", "Infrastructure\Finances.DAL.csproj", "{B644B239-6DAB-4A0F-98BB-4D979E362754}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{23E12BB0-F863-42ED-868C-8EBDFF9C8AB6}"
 EndProject

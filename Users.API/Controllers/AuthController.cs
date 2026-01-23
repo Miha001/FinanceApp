@@ -1,13 +1,13 @@
-﻿using Application.Abstractions.Services;
-using Application.Validations.FluentValidator;
-using DAL.Controller;
-using Domain.Constants.Route;
-using Domain.Models.Dto.Auth;
-using Domain.Result;
+﻿using DAL.Controller;
+using Finances.Application.Abstractions.Services;
+using Finances.Application.Validations.FluentValidator;
+using Finances.Domain.Constants.Route;
+using Finances.Domain.Models.Dto.Auth;
+using Finances.Domain.Result;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Users.API.Controllers;
+namespace Finances.Users.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

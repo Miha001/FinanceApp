@@ -1,4 +1,4 @@
-﻿namespace Domain.Enum;
+﻿namespace Finances.Domain.Enum;
 public enum ErrorCodes
 {
     // Статус коды для пользователя

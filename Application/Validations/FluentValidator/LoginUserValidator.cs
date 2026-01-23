@@ -1,8 +1,8 @@
 ﻿using Domain.Extensions;
+using Finances.Domain.Models.Dto.Auth;
 using FluentValidation;
-using Domain.Models.Dto.Auth;
 
-namespace Application.Validations.FluentValidator;
+namespace Finances.Application.Validations.FluentValidator;
 
 /// <summary>
 /// Валидация авторизации пользователя

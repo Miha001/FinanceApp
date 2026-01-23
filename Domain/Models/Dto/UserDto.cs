@@ -1,4 +1,4 @@
-﻿namespace Domain.Models.Dto;
+﻿namespace Finances.Domain.Models.Dto;
 
 public class UserDto
 {

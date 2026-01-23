@@ -1,8 +1,8 @@
-﻿using Application.Abstractions;
-using Infrastructure.Db.Context;
+﻿using Finances.Application.Abstractions;
+using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace DAL.Implementations.Services;
+namespace Finances.DAL.Implementations.Shared;
 public class UnitOfWork(DataContext dbContext) : IUnitOfWork
 {
     /// <inheritdoc/>

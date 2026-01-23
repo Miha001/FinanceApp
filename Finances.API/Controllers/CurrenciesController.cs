@@ -1,7 +1,7 @@
-﻿using Application.Abstractions.Services;
-using Domain.Constants.Route;
-using Domain.Models.VM;
-using Domain.Result;
+﻿using Finances.Application.Abstractions.Services;
+using Finances.Domain.Constants.Route;
+using Finances.Domain.Models.VM;
+using Finances.Domain.Result;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

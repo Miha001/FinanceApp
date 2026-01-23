@@ -1,7 +1,7 @@
-﻿using Domain.Db.Entities;
-using Domain.Result;
+﻿using Finances.Domain.Db.Entities;
+using Finances.Domain.Result;
 
-namespace Application.Abstractions.Validators;
+namespace Finances.Application.Abstractions.Validators;
 
 /// <summary>
 /// Валидатор для сервиса аутентификации.

@@ -1,6 +1,5 @@
-﻿using Application.Abstractions.Repositories;
-using Application.Abstractions.Services;
-using Domain.Db.Entities;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.Domain.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

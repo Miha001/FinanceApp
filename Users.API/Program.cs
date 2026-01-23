@@ -1,12 +1,12 @@
-using Application.Abstractions;
-using Application.Abstractions.Services;
-using Application.Abstractions.Validators;
-using Application.Validations;
-using DAL.Implementations.Services;
-using Infrastructure.Extensions;
-using Infrastructure.Implementations.Services;
 using Infrastructure.Middlewares;
-using Application;
+using Finances.Application;
+using Finances.Application.Validations;
+using Finances.Application.Abstractions.Services;
+using Finances.DAL.Implementations.Users;
+using Finances.Application.Abstractions;
+using Finances.DAL.Implementations.Shared;
+using Finances.Application.Abstractions.Validators;
+using Finances.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,6 @@
-﻿using Application.Abstractions.Repositories;
-using DAL.Implementations.Repositories;
-using Infrastructure.Db.Context;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.DAL.Implementations.Carrencies;
+using Finances.Infrastructure.Db.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

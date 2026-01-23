@@ -1,6 +1,5 @@
-﻿using Domain.Db.Entities;
+﻿using Finances.Domain.Db.Entities;
 using System.Globalization;
-using System.Transactions;
 using System.Xml.Linq;
 
 namespace Worker.Parsers;

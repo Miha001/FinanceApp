@@ -1,10 +1,10 @@
-﻿using Domain.Models;
-using Domain.Models.Dto;
-using Domain.Models.Dto.Auth;
-using Domain.Result;
+﻿using Finances.Domain.Models;
+using Finances.Domain.Models.Dto;
+using Finances.Domain.Models.Dto.Auth;
+using Finances.Domain.Result;
 using Microsoft.AspNetCore.Http;
 
-namespace Application.Abstractions.Services;
+namespace Finances.Application.Abstractions.Services;
 
 /// <summary>
 /// Сервис авторизации

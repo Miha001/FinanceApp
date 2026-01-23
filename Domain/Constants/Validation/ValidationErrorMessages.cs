@@ -1,4 +1,4 @@
-﻿namespace Domain.Constants.Validation;
+﻿namespace Finances.Domain.Constants.Validation;
 
 /// <summary>
 /// Класс для хранения сообщений об ошибке в валидаторах.

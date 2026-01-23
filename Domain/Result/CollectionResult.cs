@@ -1,4 +1,4 @@
-﻿namespace Domain.Result;
+﻿namespace Finances.Domain.Result;
 
 /// <summary>
 /// Класс для реализации паттерна Result Pattern.

@@ -1,8 +1,8 @@
-﻿using Domain.Db.Entities;
+﻿using Finances.Domain.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Domain.Db.Context.EntityTypeConfigurations;
+namespace Finances.Domain.Db.Context.EntityTypeConfigurations;
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> b)

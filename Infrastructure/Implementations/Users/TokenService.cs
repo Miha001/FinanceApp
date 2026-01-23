@@ -1,13 +1,13 @@
-﻿using Application.Abstractions.Services;
-using Domain.Db.Entities;
-using Domain.Settings;
+﻿using Finances.Application.Abstractions.Services;
+using Finances.Domain.Db.Entities;
+using Finances.Domain.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
-namespace DAL.Implementations.Services;
+namespace Finances.DAL.Implementations.Users;
 
 public class TokenService(IOptions<JwtSettings> jwtSettings) : ITokenService
 {

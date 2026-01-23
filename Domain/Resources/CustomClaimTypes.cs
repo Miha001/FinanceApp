@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Security.Claims;
 
-namespace Domain.Resources;
+namespace Finances.Domain.Resources;
 public class CustomClaimTypes
 {
     public const string UserId = "userId";

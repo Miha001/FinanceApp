@@ -1,8 +1,8 @@
-﻿using Domain.Db.Entities;
+﻿using Finances.Domain.Db.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DAL.Db.Context.EntityTypeConfigurations;
+namespace Finances.DAL.Db.Context.EntityTypeConfigurations;
 public class UserCurrencyConfiguration : IEntityTypeConfiguration<UserCurrency>
 {
     public void Configure(EntityTypeBuilder<UserCurrency> b)

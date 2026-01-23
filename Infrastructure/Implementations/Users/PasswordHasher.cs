@@ -1,7 +1,7 @@
-﻿using Application.Abstractions.Helpers;
+﻿using Finances.Application.Abstractions.Users;
 using System.Security.Cryptography;
 
-namespace DAL.Implementations.Helpers;
+namespace Finances.DAL.Implementations.Users;
 
 public sealed class PasswordHasher : IPasswordHasher
 {

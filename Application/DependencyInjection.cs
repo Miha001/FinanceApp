@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Finances.Application;
 
 /// <summary>
 /// Класс для внедрения зависимостей слоя Application

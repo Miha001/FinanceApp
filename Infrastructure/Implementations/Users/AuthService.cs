@@ -1,16 +1,15 @@
-﻿using Application.Abstractions;
-using Application.Abstractions.Services;
-using Application.Abstractions.Validators;
-using Application.CQRS.Commands;
-using Application.CQRS.Queries;
-using Application.Resources;
-using Domain.Constants;
-using Domain.Enum;
-using Domain.Models;
-using Domain.Models.Dto;
-using Domain.Models.Dto.Auth;
-using Domain.Result;
-using Domain.Settings;
+﻿using Finances.Application.Abstractions;
+using Finances.Application.Abstractions.Services;
+using Finances.Application.Abstractions.Validators;
+using Finances.Application.CQRS.Commands;
+using Finances.Application.CQRS.Queries;
+using Finances.Application.Resources;
+using Finances.Domain.Enum;
+using Finances.Domain.Models;
+using Finances.Domain.Models.Dto;
+using Finances.Domain.Models.Dto.Auth;
+using Finances.Domain.Result;
+using Finances.Domain.Settings;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +17,7 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
 using ILogger = Serilog.ILogger;
 
-namespace Infrastructure.Implementations.Services;
+namespace Finances.DAL.Implementations.Users;
 
 public class AuthService(IMediator mediator,
         ITokenService tokenService,

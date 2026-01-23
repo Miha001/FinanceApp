@@ -1,14 +1,13 @@
-﻿using Application.Abstractions.Helpers;
-using Application.Abstractions.Repositories;
-using Application.Abstractions.Services;
-using Application.Validations.FluentValidator;
-using DAL.Implementations.Helpers;
-using DAL.Implementations.Services;
-using Domain.Db.Entities;
-using Domain.Settings;
+﻿using Finances.Application.Abstractions.Repositories;
+using Finances.Application.Abstractions.Services;
+using Finances.Application.Abstractions.Users;
+using Finances.Application.Validations.FluentValidator;
+using Finances.DAL.Implementations.Shared;
+using Finances.DAL.Implementations.Users;
+using Finances.Domain.Db.Entities;
+using Finances.Domain.Settings;
+using Finances.Infrastructure.Db.Context;
 using FluentValidation;
-using Infrastructure.Db.Context;
-using Infrastructure.Implementations.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +17,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 
-namespace Infrastructure.Extensions;
+namespace Finances.Infrastructure.Extensions;
 public static class CongifurationServicesExtension
 {
     /// <summary>
