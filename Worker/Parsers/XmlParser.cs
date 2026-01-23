@@ -22,10 +22,10 @@ public class XmlParser
                 continue;
             }
 
-            if(float.TryParse(vunitRateString,
+            if(decimal.TryParse(vunitRateString,
                 NumberStyles.Currency,
                 new CultureInfo("ru-RU"),
-                out float rate))
+                out decimal rate))
             {
                 currencies.Add(new Currency
                 {

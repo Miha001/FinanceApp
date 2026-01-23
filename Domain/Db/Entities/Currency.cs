@@ -14,7 +14,7 @@ public class Currency : IEntityId<Guid>
     /// <summary>
     /// Курс валюты к рублю
     /// </summary>
-    public float Rate { get; set; }
+    public decimal Rate { get; set; }
 
     public virtual ICollection<UserCurrency> UserCurrencies { get; set; }
 }

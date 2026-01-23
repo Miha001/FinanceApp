@@ -44,8 +44,8 @@ public class CurrenciesServiceTests : IClassFixture<CurrenciesServiceFixture>
         var currency2Id = Guid.NewGuid();
         var currencies = new List<Currency>
         {
-            new Currency { Id = currency1Id, Name = "USD", Rate = 1.0f },
-            new Currency { Id = currency2Id, Name = "EUR", Rate = 0.85f }
+            new Currency { Id = currency1Id, Name = "USD", Rate = 1.0m },
+            new Currency { Id = currency2Id, Name = "EUR", Rate = 0.85m }
         };
 
         _fixture.SetupGetAllCurrencies(currencies);
@@ -60,7 +60,7 @@ public class CurrenciesServiceTests : IClassFixture<CurrenciesServiceFixture>
         var usdVm = result.Data.FirstOrDefault(c => c.Id == currency1Id);
         Assert.NotNull(usdVm);
         Assert.Equal("USD", usdVm.Name);
-        Assert.Equal(1.0f, usdVm.Rate);
+        Assert.Equal(1.0m, usdVm.Rate);
 
         _fixture.MediatorMock.Verify(m => m.Send(
             It.IsAny<GetAllCurrenciesQuery>(),
@@ -91,7 +91,7 @@ public class CurrenciesServiceTests : IClassFixture<CurrenciesServiceFixture>
         var currencyId = Guid.NewGuid();
         var userCurrencies = new List<Currency>
         {
-            new Currency { Id = currencyId, Name = "GBP", Rate = 0.75f }
+            new Currency { Id = currencyId, Name = "GBP", Rate = 0.75m }
         };
 
         _fixture.SetupGetCurrenciesByUserId(userId, userCurrencies);
@@ -106,7 +106,7 @@ public class CurrenciesServiceTests : IClassFixture<CurrenciesServiceFixture>
         var gbpVm = result.Data.FirstOrDefault(c => c.Id == currencyId);
         Assert.NotNull(gbpVm);
         Assert.Equal("GBP", gbpVm.Name);
-        Assert.Equal(0.75f, gbpVm.Rate);
+        Assert.Equal(0.75m, gbpVm.Rate);
 
         _fixture.MediatorMock.Verify(m => m.Send(
             It.Is<GetCurrenciesByUserIdQuery>(q => q.UserId == userId),

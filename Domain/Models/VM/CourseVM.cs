@@ -14,5 +14,5 @@ public class CourseVM
     /// <summary>
     /// Курс валюты к рублю
     /// </summary>
-    public float Rate { get; set; }
+    public decimal Rate { get; set; }
 }
