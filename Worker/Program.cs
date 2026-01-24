@@ -1,21 +1,33 @@
 ﻿using Finances.Application.Abstractions.Currencies;
+using Finances.Application.Abstractions.Shared;
 using Finances.DAL.Implementations.Carrencies;
+using Finances.DAL.Implementations.Shared;
+using Finances.Domain.Settings;
 using Finances.Infrastructure.Db.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Quartz;
 using System.Text;
 using Worker.Jobs;
 
 var builder = Host.CreateApplicationBuilder(args);
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
 var connectionString = builder.Configuration.GetConnectionString("Default")
                         ?? throw new InvalidOperationException("Строка подключения 'postgres' не найдена.");
+
+builder.Services.Configure<CbrSettings>(
+    builder.Configuration.GetSection(nameof(CbrSettings)));
 
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
+builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
 builder.Services.AddQuartz(q =>
 {

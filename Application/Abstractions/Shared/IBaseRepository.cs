@@ -4,7 +4,7 @@
 /// Абстракция для взаимодействия с базой данных, через DbContext.
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IBaseRepository<TEntity> : IStateSaveChanges
+public interface IBaseRepository<TEntity>
 {
     /// <summary>
     /// Возвращает все сущности как IQueryable.

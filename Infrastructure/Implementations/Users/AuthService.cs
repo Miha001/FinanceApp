@@ -20,7 +20,7 @@ namespace Finances.DAL.Implementations.Users;
 
 public class AuthService(IMediator mediator,
         ITokenService tokenService,
-        IUnitOfWork unitOfWork,
+        IStateSaveChanges stateSaveChanges,
         IAuthValidator authValidator,
         ICacheService cacheService,
         ILogger logger,
@@ -80,7 +80,7 @@ public class AuthService(IMediator mediator,
         {
             user = await mediator.Send(new CreateUserCommand(dto.Name, dto.Password));
     
-            await unitOfWork.SaveChangesAsync();
+            await stateSaveChanges.SaveChangesAsync();
         }
         catch (Exception ex)
         {

@@ -12,7 +12,7 @@ namespace Finances.Application.Abstractions.Users.Commands;
 /// <param name="Password"></param>
 public sealed record CreateUserCommand(string Name, string Password) : IRequest<User>;
 
-public class CreateUserCommandHandler(IBaseRepository<User> userRepository, IPasswordHasher passwordHasher) : IRequestHandler<CreateUserCommand, User>
+public class CreateUserCommandHandler(IBaseRepository<User> userRepository, IPasswordHasher passwordHasher, IStateSaveChanges stateSaveChanges) : IRequestHandler<CreateUserCommand, User>
 {
     public async Task<User> Handle(CreateUserCommand request, CancellationToken cancellationToken = default)
     {
@@ -22,7 +22,7 @@ public class CreateUserCommandHandler(IBaseRepository<User> userRepository, IPas
         };
 
         await userRepository.CreateAsync(user);
-        await userRepository.SaveChangesAsync(cancellationToken);
+        await stateSaveChanges.SaveChangesAsync(cancellationToken);
         return user;
     }
 }

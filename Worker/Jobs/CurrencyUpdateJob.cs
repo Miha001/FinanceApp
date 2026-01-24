@@ -1,8 +1,11 @@
 ﻿using Finances.Application.Abstractions.Currencies;
+using Finances.Application.Abstractions.Shared;
 using Finances.Domain.Db.Entities;
+using Finances.Domain.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Quartz;
 using System.Text;
 using Worker.Parsers;
@@ -13,8 +16,9 @@ namespace Worker.Jobs;
 internal class CurrencyUpdateJob(
     IHttpClientFactory httpClientFactory,
     ILogger<CurrencyUpdateJob> logger,
-    IConfiguration configuration,
-    ICurrenciesRepository currenciesRepository //Возможно стоит использовать тоже CQRS, т.к. мы работаем с одной БД
+    IOptions<CbrSettings> options,
+    ICurrenciesRepository currenciesRepository, //Возможно стоит использовать тоже CQRS, т.к. мы работаем с одной БД
+    IStateSaveChanges stateSaveChanges
     ) : IJob
 {
     public async Task Execute(IJobExecutionContext jobContext)
@@ -24,7 +28,7 @@ internal class CurrencyUpdateJob(
             logger.LogInformation("Запуск обновления курсов валют");
 
             var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync(configuration.GetValue<string>("CbrUrl"), jobContext.CancellationToken);
+            var response = await client.GetAsync(options.Value.Url, jobContext.CancellationToken);
             response.EnsureSuccessStatusCode();
             var bytes = await response.Content.ReadAsByteArrayAsync(jobContext.CancellationToken);
             var xmlContent = Encoding.GetEncoding("windows-1251").GetString(bytes);
@@ -63,7 +67,7 @@ internal class CurrencyUpdateJob(
                 logger.LogInformation("Добавлено {Count} новых валют.", currenciesToAdd.Count);
             }
 
-            await currenciesRepository.SaveChangesAsync(jobContext.CancellationToken);
+            await stateSaveChanges.SaveChangesAsync(jobContext.CancellationToken);
 
             logger.LogInformation("Обновление курсов успешно завершено.");
         }

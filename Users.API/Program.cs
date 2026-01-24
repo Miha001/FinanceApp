@@ -20,7 +20,7 @@ builder.Services.AddApplication();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
 builder.Services.AddScoped<IAuthValidator, AuthValidator>();
 

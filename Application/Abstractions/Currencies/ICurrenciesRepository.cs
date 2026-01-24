@@ -6,7 +6,7 @@ namespace Finances.Application.Abstractions.Currencies;
 /// <summary>
 /// Абстракция для взаимодействия с курсом валют через DbContext
 /// </summary>
-public interface ICurrenciesRepository : IBaseRepository<Currency>
+public interface ICurrenciesRepository
 {
     /// <summary>
     ///  Получить все курсы валют

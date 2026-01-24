@@ -9,6 +9,5 @@ public interface IStateSaveChanges
     /// Сохранить все изменения сущностей.
     /// </summary>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task SaveChangesAsync(CancellationToken cancellationToken = default);
 }

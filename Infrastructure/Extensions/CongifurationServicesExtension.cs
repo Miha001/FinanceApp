@@ -76,6 +76,7 @@ public static class CongifurationServicesExtension
     {
         services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
         var redisSettings = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
 
