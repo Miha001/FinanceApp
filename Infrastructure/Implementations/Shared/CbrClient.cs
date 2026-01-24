@@ -7,7 +7,7 @@ namespace Finances.DAL.Implementations.Shared;
 
 public class CbrClient : ICbrClient
 {
-
+    private static readonly Encoding _windows1251 = Encoding.GetEncoding("windows-1251");
     private readonly HttpClient _httpClient;
 
     public CbrClient(HttpClient httpClient)
@@ -21,7 +21,7 @@ public class CbrClient : ICbrClient
         response.EnsureSuccessStatusCode();
 
         var bytes = await response.Content.ReadAsByteArrayAsync(ct);
-        var xmlContent = Encoding.GetEncoding("windows-1251").GetString(bytes);
+        var xmlContent = _windows1251.GetString(bytes);
 
         return XmlParser.Parse(xmlContent);
     }

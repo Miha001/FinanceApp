@@ -36,7 +36,7 @@ builder.Services.AddHttpClient<ICbrClient, CbrClient>((serviceProvider, client) 
     var settings = serviceProvider.GetRequiredService<IOptions<CbrSettings>>().Value;
 
     client.BaseAddress = new Uri(settings.Url);
-    client.Timeout = TimeSpan.FromSeconds(30);
+    client.Timeout = TimeSpan.FromSeconds(30); //TODO: в конфигурацию
 });
 
 builder.Services.AddQuartz(q =>
