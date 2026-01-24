@@ -1,3 +1,6 @@
 ﻿namespace Finances.Domain.Settings;
 
-public sealed record CbrSettings(string Url);
+public sealed class CbrSettings()
+{ 
+    public string Url { get; set; }
+};

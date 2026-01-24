@@ -1,79 +1,27 @@
-﻿using Finances.Application.Abstractions.Currencies;
-using Finances.Application.Abstractions.Shared;
-using Finances.Domain.Db.Entities;
-using Finances.Domain.Settings;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Finances.Application.Abstractions.Currencies.Commands;
+using MediatR;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Quartz;
-using System.Text;
-using Worker.Parsers;
 
 namespace Worker.Jobs; 
 
 [DisallowConcurrentExecution]
 internal class CurrencyUpdateJob(
-    IHttpClientFactory httpClientFactory,
-    ILogger<CurrencyUpdateJob> logger,
-    IOptions<CbrSettings> options,
-    ICurrenciesRepository currenciesRepository, //Возможно стоит использовать тоже CQRS, т.к. мы работаем с одной БД
-    IStateSaveChanges stateSaveChanges
+    IMediator mediator,
+    ILogger<CurrencyUpdateJob> logger
     ) : IJob
 {
     public async Task Execute(IJobExecutionContext jobContext)
     {
         try
-        { 
-            logger.LogInformation("Запуск обновления курсов валют");
+        {
+            logger.LogInformation("Job started");
 
-            var client = httpClientFactory.CreateClient();
-            var response = await client.GetAsync(options.Value.Url, jobContext.CancellationToken);
-            response.EnsureSuccessStatusCode();
-            var bytes = await response.Content.ReadAsByteArrayAsync(jobContext.CancellationToken);
-            var xmlContent = Encoding.GetEncoding("windows-1251").GetString(bytes);
-            var newCurrencies = XmlParser.Parse(xmlContent);
-
-            var existingCurrencies = await currenciesRepository.GetAllAsync();
-
-            var currenciesDict = existingCurrencies.ToDictionary(c => c.Id, c => c);
-
-            var currenciesToUpdate = new List<Currency>();
-            var currenciesToAdd = new List<Currency>();
-
-            foreach (var newCurrency in newCurrencies)
-            {
-                if (currenciesDict.TryGetValue(newCurrency.Id, out var existingCurrency))
-                {
-                    existingCurrency.Rate = newCurrency.Rate;
-                    existingCurrency.Name = newCurrency.Name;
-                    currenciesToUpdate.Add(existingCurrency);
-                }
-                else
-                {
-                    currenciesToAdd.Add(newCurrency);
-                }
-            }
-
-            if (currenciesToUpdate.Count > 0)
-            {
-                currenciesRepository.UpdateRange(currenciesToUpdate);
-                logger.LogInformation("Обновлено {Count} курсов.", currenciesToUpdate.Count);
-            }
-
-            if (currenciesToAdd.Count > 0)
-            {
-                await currenciesRepository.AddRangeAsync(currenciesToAdd, jobContext.CancellationToken);
-                logger.LogInformation("Добавлено {Count} новых валют.", currenciesToAdd.Count);
-            }
-
-            await stateSaveChanges.SaveChangesAsync(jobContext.CancellationToken);
-
-            logger.LogInformation("Обновление курсов успешно завершено.");
+            await mediator.Send(new UpdateCurrencyRatesCommand(), jobContext.CancellationToken);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Ошибка при выполнении Job'ы по обновлению курсов валют.");
+            logger.LogError(ex, $"Fail while {nameof(CurrencyUpdateJob)} worked...");
         }
     }
 }

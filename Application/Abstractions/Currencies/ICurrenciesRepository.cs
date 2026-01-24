@@ -11,9 +11,9 @@ public interface ICurrenciesRepository
     /// <summary>
     ///  Получить все курсы валют
     /// </summary>
-    /// <param name="cancellationToken"></param>
+    /// <param name="ct"></param>
     /// <returns></returns>
-    Task<IEnumerable<Currency>> GetAllAsync(CancellationToken cancellationToken = default);
+    Task<IEnumerable<Currency>> GetAll(CancellationToken ct = default);
 
     /// <summary>
     /// Обновить список курсов валют
@@ -26,7 +26,7 @@ public interface ICurrenciesRepository
     /// Добавить список курсов валют
     /// </summary>
     /// <param name="currencies"></param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="ct"></param>
     /// <returns></returns>
-    Task AddRangeAsync(IEnumerable<Currency> currencies, CancellationToken cancellationToken = default);
+    Task AddRange(IEnumerable<Currency> currencies, CancellationToken ct = default);
 }

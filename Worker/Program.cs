@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Quartz;
 using System.Text;
 using Worker.Jobs;
+using Finances.Application;
 
 var builder = Host.CreateApplicationBuilder(args);
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -24,10 +25,19 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 builder.Services.Configure<CbrSettings>(
     builder.Configuration.GetSection(nameof(CbrSettings)));
 
+builder.Services.AddApplication();
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
+
+builder.Services.AddHttpClient<ICbrClient, CbrClient>((serviceProvider, client) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<CbrSettings>>().Value;
+
+    client.BaseAddress = new Uri(settings.Url);
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
 
 builder.Services.AddQuartz(q =>
 {

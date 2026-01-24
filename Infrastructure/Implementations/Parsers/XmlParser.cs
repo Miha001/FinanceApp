@@ -2,21 +2,20 @@
 using System.Globalization;
 using System.Xml.Linq;
 
-namespace Worker.Parsers;
+namespace Finances.DAL.Parsers;
 public class XmlParser
 {
-    public static IEnumerable<Currency> Parse(string xmlContent)
+    public static List<Currency> Parse(string xmlContent)
     {
         var doc = XDocument.Parse(xmlContent);
         var currencies = new List<Currency>();
 
         foreach(var valute in doc.Descendants("Valute"))
         {
-           // var charCode = valute.Element("CharCode")?.Value;
             var name = valute.Element("Name")?.Value;
             var vunitRateString = valute.Element("VunitRate")?.Value;
 
-            if (//charCode is null ||
+            if (
                 name is null || vunitRateString is null)
             {
                 continue;
@@ -29,7 +28,6 @@ public class XmlParser
             {
                 currencies.Add(new Currency
                 {
-                    //charCode,
                     Name = name,
                     Rate = rate
                 });
