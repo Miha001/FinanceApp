@@ -5,7 +5,7 @@ public class Currency : IEntityId<Guid>
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid Id { get; private set; }
 
     /// <summary>
     /// Название валюты

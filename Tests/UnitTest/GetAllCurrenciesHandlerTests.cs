@@ -42,7 +42,7 @@ public class GetAllCurrenciesHandlerTests
         Assert.NotNull(result);
         Assert.Equal(2, result.Count);
 
-        var usdDto = result.FirstOrDefault(c => c.Name == "USD");
+        var usdDto = result.Data.FirstOrDefault(c => c.Name == "USD");
         Assert.NotNull(usdDto);
         Assert.Equal(1.0m, usdDto.Rate);
     }

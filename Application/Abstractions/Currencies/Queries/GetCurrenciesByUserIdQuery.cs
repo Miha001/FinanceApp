@@ -1,15 +1,20 @@
-﻿using Finances.Domain.Db.Entities;
+﻿using Finances.Application.Extensions;
+using Finances.Domain.Models.Dto;
+using Finances.Domain.Result;
 using MediatR;
 
 namespace Finances.Application.Abstractions.Currencies.Queries;
-public sealed record GetCurrenciesByUserIdQuery(Guid UserId) : IRequest<IReadOnlyCollection<Currency>>;
+public sealed record GetCurrenciesByUserIdQuery(Guid UserId) : IRequest<CollectionResult<CourseDto>>;
 
 public class GetCurrenciesByUserIdHandler(
     ICurrenciesRepository repository
-    ) : IRequestHandler<GetCurrenciesByUserIdQuery, IReadOnlyCollection<Currency>>
+    ) : IRequestHandler<GetCurrenciesByUserIdQuery, CollectionResult<CourseDto>>
 {
-    public async Task<IReadOnlyCollection<Currency>> Handle(GetCurrenciesByUserIdQuery request, CancellationToken ct)
+    public async Task<CollectionResult<CourseDto>> Handle(GetCurrenciesByUserIdQuery request, CancellationToken ct)
     {
-        return await repository.GetByUserId(request.UserId, ct);
+        var currencies = await repository.GetByUserId(request.UserId, ct);
+
+        var dtos = currencies.ToDto();
+        return CollectionResult<CourseDto>.Success(dtos);
     }
 }

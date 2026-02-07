@@ -1,7 +1,10 @@
 ﻿using Finances.Application.Abstractions.Currencies;
+using Finances.Application.Abstractions.Currencies.Queries;
+using Finances.Application.Abstractions.Users.Commands;
 using Finances.Domain.Constants.Route;
 using Finances.Domain.Models.Dto;
 using Finances.Domain.Result;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,44 +13,34 @@ namespace Finances.API.Controllers;
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class CurrenciesController(ICurrenciesService currenciesService) : ControllerBase
+public class CurrenciesController(IMediator mediator) : ControllerBase
 {
     [HttpGet(Routes.Get.All)]
     public async Task<ActionResult<CollectionResult<CourseDto>>> GetAll()
     {
-        var response = await currenciesService.GetAll();
+        var result = await mediator.Send(new GetAllCurrenciesQuery());
 
-        if (response.IsSuccess)
-        {
-            return Ok(response);
-        }
-
-        return BadRequest(response);
+        if (result.IsSuccess) return Ok(result);
+        return BadRequest(result);
     }
 
     [HttpGet(Routes.Get.Courses)]
     public async Task<ActionResult<CollectionResult<CourseDto>>> GetRates(Guid userId)
     {
-        var response = await currenciesService.GetCoursesByUserId(userId);
+        var result = await mediator.Send(new GetCurrenciesByUserIdQuery(userId));
 
-        if(response.IsSuccess)
-        {
-            return Ok(response);
-        }
+        if (result.IsSuccess) return Ok(result);
 
-        return BadRequest(response);
+        return BadRequest(result);
     }
 
-    [HttpGet(Routes.Post.ToFavorites)]
+    [HttpPost(Routes.Post.ToFavorites)]
     public async Task<ActionResult<CollectionResult<CourseDto>>> AddToFavorites(Guid userId, Guid currencyId)
     {
-        var response = await currenciesService.AddToFavorites(userId, currencyId);
+        var command = new CreateUserCurrencyCommand(userId, currencyId);
+        var result = await mediator.Send(command);
 
-        if (response.IsSuccess)
-        {
-            return Ok(response);
-        }
-
-        return BadRequest(response);
+        if (result.IsSuccess) return Ok(result);
+        return BadRequest(result);
     }
 }
