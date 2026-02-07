@@ -14,14 +14,19 @@ public class CurrenciesRepository(DataContext dataContext) : BaseRepository<Curr
     }
 
     ///<inheritdoc/>
-    public async Task<IEnumerable<Currency>> GetAll(CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<Currency>> GetAll(CancellationToken ct = default)
     {
         return await _dbSet.ToListAsync(ct);
     }
 
     ///<inheritdoc/>
-    public void UpdateRange(IEnumerable<Currency> currencies)
+    public async Task<IReadOnlyCollection<Currency>> GetByUserId(Guid userId, CancellationToken ct = default)
     {
-        _dbSet.UpdateRange(currencies);
+        var currencies = await _dbSet
+            .AsNoTracking()
+            .Where(c => c.UserCurrencies.Any(uc => uc.UserId == userId))
+            .ToListAsync(ct);
+
+        return currencies;
     }
 }

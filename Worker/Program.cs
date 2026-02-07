@@ -20,7 +20,7 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
 var connectionString = builder.Configuration.GetConnectionString("Default")
-                        ?? throw new InvalidOperationException("Строка подключения 'postgres' не найдена.");
+                        ?? throw new InvalidOperationException("Строка подключения не найдена.");
 
 builder.Services.Configure<CbrSettings>(
     builder.Configuration.GetSection(nameof(CbrSettings)));

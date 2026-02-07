@@ -16,43 +16,36 @@ public class UpdateCurrencyRatesCommandHandler(
     public async Task Handle(UpdateCurrencyRatesCommand request, CancellationToken ct)
     {
         logger.LogInformation("Start update currencies...");
-        var newCurrencies = await cbrClient.GetCurrencies(ct);
+
+        var cbrRates = await cbrClient.GetCurrencies(ct);
 
         var existingCurrencies = await repository.GetAll(ct);
-
         var currenciesDict = existingCurrencies.ToDictionary(c => c.Name, c => c);
 
-        var currenciesToUpdate = new List<Currency>();
         var currenciesToAdd = new List<Currency>();
+        int updatedCount = 0;
 
-        foreach (var newCurrency in newCurrencies)
+        foreach (var cbrRate in cbrRates)
         {
-            if (currenciesDict.TryGetValue(newCurrency.Name, out var existingCurrency))
+            if (currenciesDict.TryGetValue(cbrRate.Name, out var existingCurrency))
             {
-                existingCurrency.Rate = newCurrency.Rate;
-                existingCurrency.Name = newCurrency.Name;
-                currenciesToUpdate.Add(existingCurrency);
+                existingCurrency.UpdateRate(cbrRate.Rate);
+                updatedCount++;
             }
             else
             {
-                currenciesToAdd.Add(newCurrency);
+                currenciesToAdd.Add(cbrRate);
             }
-        }
-
-        if (currenciesToUpdate.Count > 0)
-        {
-            repository.UpdateRange(currenciesToUpdate);
-            logger.LogInformation("Обновлено {Count} курсов.", currenciesToUpdate.Count);
         }
 
         if (currenciesToAdd.Count > 0)
         {
             await repository.AddRange(currenciesToAdd, ct);
-            logger.LogInformation("Добавлено {Count} новых валют.", currenciesToAdd.Count);
+            logger.LogInformation("Add {Count} new currencies.", currenciesToAdd.Count);
         }
 
-        await stateSaveChange.SaveChangesAsync();
+        await stateSaveChange.SaveChanges(ct);
 
-        logger.LogInformation("Валюты успешно обновлены.");
+        logger.LogInformation("Currencies successfully updated. Count: {Count}", updatedCount);
     }
 }

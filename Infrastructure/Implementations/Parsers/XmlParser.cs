@@ -9,7 +9,6 @@ public class XmlParser
     private const string NameElement = "Name";
     private const string RateElement = "VunitRate";
 
-    // Используем GetCultureInfo, оно кэширует экземпляр внутри .NET
     private static readonly CultureInfo RuCulture = CultureInfo.GetCultureInfo("ru-RU");
 
     public static List<Currency> Parse(string xmlContent)
@@ -33,11 +32,7 @@ public class XmlParser
                 RuCulture,
                 out decimal rate))
             {
-                currencies.Add(new Currency
-                {
-                    Name = name,
-                    Rate = rate
-                });
+                currencies.Add(new Currency(name, rate));
             }
         }
 

@@ -5,7 +5,7 @@ namespace Finances.DAL.Implementations.Shared;
 public class StateSaveChanges(DataContext dbContext) : IStateSaveChanges
 {
     /// <inheritdoc/>
-    public async Task SaveChangesAsync(CancellationToken ct = default)
+    public async Task SaveChanges(CancellationToken ct = default)
     {
         await dbContext.SaveChangesAsync(ct);
     }

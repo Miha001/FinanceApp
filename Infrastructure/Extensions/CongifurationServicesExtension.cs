@@ -1,8 +1,8 @@
 ﻿using Finances.Application.Abstractions.Shared;
-using Finances.Application.Abstractions.Users;
 using Finances.Application.Validations.FluentValidator;
 using Finances.DAL.Implementations.Shared;
 using Finances.DAL.Implementations.Users;
+using Finances.Domain.Abstractions;
 using Finances.Domain.Db.Entities;
 using Finances.Domain.Settings;
 using Finances.Infrastructure.Db.Context;
@@ -154,7 +154,7 @@ public static class CongifurationServicesExtension
                 {
                     var cacheService = context.HttpContext.RequestServices.GetRequiredService<ICacheService>();
 
-                    string? value = await cacheService.GetObjectAsync<string?>(jwt.EncodedToken);
+                    string? value = await cacheService.GetObject<string?>(jwt.EncodedToken);
 
                     if (value is not null)
                     {

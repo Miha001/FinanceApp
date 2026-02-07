@@ -1,9 +1,11 @@
 ﻿using DAL.Controller;
-using Finances.Application.Abstractions.Services;
-using Finances.Application.Validations.FluentValidator;
+using Finances.Application.Abstractions.Users.Commands;
 using Finances.Domain.Constants.Route;
 using Finances.Domain.Models.Dto.Auth;
 using Finances.Domain.Result;
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,9 +13,9 @@ namespace Finances.Users.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(IAuthService authService,
-    LoginUserValidator loginUserValidator,
-    RegisterUserValidator registerUserValidator) : BaseApiController
+public class AuthController(IMediator mediator,
+    IValidator<LoginUserDto> loginValidator,
+    IValidator<RegisterUserDto> registerValidator) : BaseApiController
 {
     /// <summary>
     /// Регистрация пользователя
@@ -23,19 +25,14 @@ public class AuthController(IAuthService authService,
     [HttpPost(Routes.Auth.Register)]
     public async Task<ActionResult<BaseResult>> Register([FromBody] RegisterUserDto dto)
     {
-        var validationResult = await registerUserValidator.ValidateAsync(dto);
+        var validationResult = await registerValidator.ValidateAsync(dto);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
-        if (!validationResult.IsValid)
-        {
-            return BadRequest(validationResult.Errors);
-        }
+        var command = new RegisterUserCommand(dto.Name, dto.Password);
+        var result = await mediator.Send(command);
 
-        var response = await authService.Register(dto);
-        if (response.IsSuccess)
-        {
-            return Ok(response);
-        }
-        return BadRequest(response);
+        if (result.IsSuccess) return Ok(result);
+        return BadRequest(result);
     }
 
     /// <summary>
@@ -46,14 +43,13 @@ public class AuthController(IAuthService authService,
     [HttpPost(Routes.Auth.Logout)]
     public async Task<IActionResult> Logout()
     {
-        var response = await authService.Logout(AuthorizedUserId, HttpContext);
+        var token = await HttpContext.GetTokenAsync("access_token");
 
-        if (response.IsSuccess)
-        {
-            return Ok();
-        }
+        var command = new LogoutUserCommand(token, AuthorizedUserId);
+        var result = await mediator.Send(command);
 
-        return BadRequest(response);
+        if (result.IsSuccess) return Ok();
+        return BadRequest(result);
     }
 
     /// <summary>
@@ -64,18 +60,13 @@ public class AuthController(IAuthService authService,
     [HttpPost(Routes.Auth.Login)]
     public async Task<ActionResult<BaseResult>> Login([FromBody] LoginUserDto dto)
     {
-        var validationResult = await loginUserValidator.ValidateAsync(dto);
+        var validationResult = await loginValidator.ValidateAsync(dto);
+        if (!validationResult.IsValid) return BadRequest(validationResult.Errors);
 
-        if (!validationResult.IsValid)
-        {
-            return BadRequest(validationResult.Errors);
-        }
+        var command = new LoginUserCommand(dto.Name, dto.Password);
+        var result = await mediator.Send(command);
 
-        var response = await authService.Login(dto);
-        if (response.IsSuccess)
-        {
-            return Ok(response);
-        }
-        return BadRequest(response);
+        if (result.IsSuccess) return Ok(result);
+        return BadRequest(result);
     }
 }

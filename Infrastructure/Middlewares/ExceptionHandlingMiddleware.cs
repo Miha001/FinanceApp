@@ -16,9 +16,7 @@ public class ExceptionHandlingMiddleware(ILogger logger, RequestDelegate next)
         }
         catch (Exception ex)
         {
-            Debugger.Break();
-
-            await HandleExceptionAsync(httpContext, ex);
+                await HandleExceptionAsync(httpContext, ex);
         }
     }
 

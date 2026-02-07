@@ -9,5 +9,5 @@ public interface IEntityId<T> where T : struct
     /// <summary>
     /// Идентификатор сущности
     /// </summary>
-    T Id { get; set; }
+    T Id { get; }
 }

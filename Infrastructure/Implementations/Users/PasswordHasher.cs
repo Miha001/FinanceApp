@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Users;
+﻿using Finances.Domain.Abstractions;
 using System.Security.Cryptography;
 
 namespace Finances.DAL.Implementations.Users;

@@ -1,4 +1,4 @@
-﻿namespace Finances.Application.Abstractions.Users;
+﻿namespace Finances.Domain.Abstractions;
 
 /// <summary>
 /// Сервис для работы с хэшированием пароля.

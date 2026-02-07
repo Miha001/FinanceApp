@@ -1,5 +1,4 @@
-﻿using Finances.Application.Abstractions.Shared;
-using Finances.Domain.Db.Entities;
+﻿using Finances.Domain.Db.Entities;
 
 namespace Finances.Application.Abstractions.Currencies;
 
@@ -13,14 +12,15 @@ public interface ICurrenciesRepository
     /// </summary>
     /// <param name="ct"></param>
     /// <returns></returns>
-    Task<IEnumerable<Currency>> GetAll(CancellationToken ct = default);
+    Task<IReadOnlyCollection<Currency>> GetAll(CancellationToken ct = default);
 
     /// <summary>
-    /// Обновить список курсов валют
+    /// Получить избранные валюты пользователя по userId
     /// </summary>
-    /// <param name="currencies"></param>
+    /// <param name="userId"></param>
+    /// <param name="ct"></param>
     /// <returns></returns>
-    void UpdateRange(IEnumerable<Currency> currencies);
+    Task<IReadOnlyCollection<Currency>> GetByUserId(Guid userId, CancellationToken ct = default);
 
     /// <summary>
     /// Добавить список курсов валют

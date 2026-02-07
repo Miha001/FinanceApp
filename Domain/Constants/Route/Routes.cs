@@ -1,7 +1,7 @@
 ﻿namespace Finances.Domain.Constants.Route;
 
 /// <summary>
-/// Константы для указания понятного роута в контроллерах.
+/// Константы для указания роута в контроллерах.
 /// </summary>
 public static class Routes
 {
@@ -10,7 +10,6 @@ public static class Routes
         public const string Register = nameof(Register);
         public const string Login = nameof(Login);
         public const string Logout = nameof(Logout);
-        public const string RefreshToken = nameof(RefreshToken);
     }
 
     public static class Get
@@ -21,7 +20,6 @@ public static class Routes
 
     public static class Post
     {
-        public const string RefreshToken = nameof(RefreshToken);
         public const string ToFavorites = nameof(ToFavorites);
     }
 }

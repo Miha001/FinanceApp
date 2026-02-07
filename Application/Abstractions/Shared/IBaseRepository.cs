@@ -10,19 +10,12 @@ public interface IBaseRepository<TEntity>
     /// Возвращает все сущности как IQueryable.
     /// </summary>
     /// <returns></returns>
-    IQueryable<TEntity> Query(bool asNoTracking = false);
+    Task<IReadOnlyCollection<TEntity>> GetAll(bool asNoTracking = false, CancellationToken ct = default);
 
     /// <summary>
     /// Создает новую сущность.
     /// </summary>
     /// <param name="entity">Сущность для создания.</param>
     /// <returns>Созданная сущность.</returns>
-    Task<TEntity> CreateAsync(TEntity entity);
-
-    /// <summary>
-    /// Обновляет сущность.
-    /// </summary>
-    /// <param name="entity">Сущность для обновления.</param>
-    /// <returns>Обновленная сущность.</returns>
-    TEntity Update(TEntity entity);
+    Task<TEntity> Create(TEntity entity, CancellationToken ct);
 }

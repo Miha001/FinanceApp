@@ -17,14 +17,14 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public IQueryable<TEntity> Query(bool asNoTracking = false)
+    public async Task<IReadOnlyCollection<TEntity>> GetAll(bool asNoTracking = false, CancellationToken ct = default)
     {
         var query = _dbSet.AsQueryable();
 
         if (asNoTracking)
             query = query.AsNoTracking();
 
-        return query;
+        return await query.ToListAsync(ct);
     }
 
     /// <inheritdoc/>
@@ -34,25 +34,20 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public async Task<TEntity> CreateAsync(TEntity entity)
+    public async Task<TEntity> Create(TEntity entity, CancellationToken ct = default)
     {
         ValidateEntityOnNull(entity);
 
-        await _dbSet.AddAsync(entity);
+        await _dbSet.AddAsync(entity, ct);
 
         return entity;
     }
 
-    /// <inheritdoc/>
-    public TEntity Update(TEntity entity)
-    {
-        ValidateEntityOnNull(entity);
-
-        _dbSet.Update(entity);
-
-        return entity;
-    }
-
+    /// <summary>
+    /// Проверка сущности на null
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     private void ValidateEntityOnNull(TEntity entity)
     {
         if (entity is null)

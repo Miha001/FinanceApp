@@ -18,8 +18,8 @@ namespace Finances.Infrastructure.Db.Context;
 /// </remarks>
 public class DataContext(DbContextOptions<DataContext> options, IConfiguration configuration) : DbContext(options)
 {
-    public DbSet<User> User { get; set; }
-    public DbSet<Currency> Currency { get; set; }
+    public DbSet<User> Users { get; set; }
+    public DbSet<Currency> Currencies { get; set; }
     public DbSet<UserCurrency> UserCurrencies { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
