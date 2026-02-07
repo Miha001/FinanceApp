@@ -12,6 +12,7 @@ using Quartz;
 using System.Text;
 using Worker.Jobs;
 using Finances.Application;
+using Finances.Worker.Abstractions;
 
 var builder = Host.CreateApplicationBuilder(args);
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

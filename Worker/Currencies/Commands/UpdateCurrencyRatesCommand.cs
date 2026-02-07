@@ -1,9 +1,11 @@
-﻿using Finances.Application.Abstractions.Shared;
+﻿using Finances.Application.Abstractions.Currencies;
+using Finances.Application.Abstractions.Shared;
 using Finances.Domain.Db.Entities;
+using Finances.Worker.Abstractions;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Finances.Application.Abstractions.Currencies.Commands;
+namespace Finances.Worker.Currencies.Commands;
 
 public record UpdateCurrencyRatesCommand : IRequest;
 

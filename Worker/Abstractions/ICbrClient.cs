@@ -1,6 +1,6 @@
 ﻿using Finances.Domain.Db.Entities;
 
-namespace Finances.Application.Abstractions.Shared;
+namespace Finances.Worker.Abstractions;
 
 public interface ICbrClient
 {

@@ -45,23 +45,6 @@
       }
     },
 
-    {
-      "DownstreamPathTemplate": "/api/UserToken/refreshToken",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44398
-        }
-      ],
-      "UpstreamPathTemplate": "/api/v1/auth/refresh",
-      "UpstreamHttpMethod": [ "POST" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
     // 2. Маршруты Finances.API
     {
       "DownstreamPathTemplate": "/api/Currencies/all",
@@ -106,7 +89,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/v1/finances/add-favorite",
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamHttpMethod": [ "POST" ],
       "AddQueryStringToDownstream": true,
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",

@@ -1,6 +1,7 @@
 ﻿using Finances.Application.Abstractions.Shared;
 using Finances.DAL.Parsers;
 using Finances.Domain.Db.Entities;
+using Finances.Worker.Abstractions;
 using System.Text;
 
 namespace Finances.DAL.Implementations.Shared;

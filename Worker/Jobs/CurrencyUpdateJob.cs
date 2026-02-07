@@ -1,4 +1,4 @@
-﻿using Finances.Application.Abstractions.Currencies.Commands;
+﻿using Finances.Worker.Currencies.Commands;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Quartz;
