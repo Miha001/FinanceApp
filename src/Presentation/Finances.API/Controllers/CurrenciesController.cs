@@ -25,9 +25,9 @@ public class CurrenciesController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet(Routes.Get.Courses)]
-    public async Task<ActionResult<CollectionResult<CourseDto>>> GetRates(Guid userId)
+    public async Task<ActionResult<CollectionResult<CourseDto>>> GetRates()
     {
-        var result = await mediator.Send(new GetCurrenciesByUserIdQuery(userId));
+        var result = await mediator.Send(new GetCurrenciesByUserIdQuery());
 
         if (result.IsSuccess) return Ok(result);
 
@@ -35,9 +35,9 @@ public class CurrenciesController(IMediator mediator) : ControllerBase
     }
 
     [HttpPost(Routes.Post.ToFavorites)]
-    public async Task<ActionResult<CollectionResult<CourseDto>>> AddToFavorites(Guid userId, Guid currencyId)
+    public async Task<ActionResult<CollectionResult<CourseDto>>> AddToFavorites(Guid currencyId)
     {
-        var command = new CreateUserCurrencyCommand(userId, currencyId);
+        var command = new CreateUserCurrencyCommand(currencyId);
         var result = await mediator.Send(command);
 
         if (result.IsSuccess) return Ok(result);

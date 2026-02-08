@@ -9,11 +9,12 @@ using System.Text;
 
 namespace Finances.DAL.Implementations.Users;
 
-public class TokenService(IOptions<JwtSettings> jwtSettings) : ITokenService
+public class TokenService(IOptions<JwtSettings> jwtSettings, TimeProvider timeProvider) : ITokenService
 {
     /// <inheritdoc/>
     public string Create(User user)
     {
+        var ddd = DateTime.UtcNow;
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Value.Key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
@@ -24,7 +25,7 @@ public class TokenService(IOptions<JwtSettings> jwtSettings) : ITokenService
                 new(ClaimTypes.Name, user.Name),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             ]),
-            Expires = DateTime.UtcNow.AddMinutes(jwtSettings.Value.ExpirationInMinutes),
+            Expires = timeProvider.GetUtcNow().UtcDateTime.AddMinutes(jwtSettings.Value.ExpirationInMinutes),
             SigningCredentials = credentials,
             Issuer = jwtSettings.Value.Issuer,
             Audience = jwtSettings.Value.Audience

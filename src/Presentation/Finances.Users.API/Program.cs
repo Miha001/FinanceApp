@@ -1,4 +1,3 @@
-using Finances.Application;
 using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
@@ -26,6 +25,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));

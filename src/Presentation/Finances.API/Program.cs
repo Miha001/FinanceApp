@@ -5,6 +5,7 @@ using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
 using Finances.Application.Abstractions.Users.Commands;
 using Finances.DAL.Implementations.Carrencies;
+using Finances.DAL.Implementations.Shared;
 using Finances.DAL.Implementations.Users;
 using Finances.Domain.Models.Dto;
 using Finances.Domain.Result;
@@ -21,9 +22,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 
+builder.Services.AddSingleton(TimeProvider.System);
+
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
