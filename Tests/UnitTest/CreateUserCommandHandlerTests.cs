@@ -51,7 +51,9 @@ public class CreateUserCommandHandlerTests
     public async Task Handle_ShouldCreateUser_WhenSuccess()
     {
         // Arrange
-        var command = new CreateUserCommand("NewUser", "pass");
+        var userName = "NewUser";
+        var command = new CreateUserCommand(userName, "pass");
+
         var hashedPassword = "hashed_pass";
 
         _repoMock.Setup(r => r.ExistsByName(command.Name, It.IsAny<CancellationToken>()))
@@ -65,10 +67,10 @@ public class CreateUserCommandHandlerTests
 
         // Assert
         Assert.True(result.IsSuccess);
-        Assert.Equal("NewUser", result.Data.Name);
+        Assert.Equal(userName, result.Data.Name);
 
         _repoMock.Verify(r => r.Create(
-            It.Is<User>(u => u.Name == "NewUser" && u.Password == hashedPassword),
+            It.Is<User>(u => u.Name == userName && u.Password == hashedPassword),
             It.IsAny<CancellationToken>()), Times.Once);
 
         _uowMock.Verify(u => u.SaveChanges(It.IsAny<CancellationToken>()), Times.Once);

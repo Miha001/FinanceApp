@@ -1,9 +1,13 @@
-﻿using Finances.Application.Abstractions.Currencies;
+﻿using Finances.Application;
+using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Shared;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
 using Finances.Domain.Settings;
 using Finances.Infrastructure.Db.Context;
+using Finances.Worker.Abstractions;
+using Finances.Worker.Currencies.Commands;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,8 +15,6 @@ using Microsoft.Extensions.Options;
 using Quartz;
 using System.Text;
 using Worker.Jobs;
-using Finances.Application;
-using Finances.Worker.Abstractions;
 
 var builder = Host.CreateApplicationBuilder(args);
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -26,11 +28,14 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
 builder.Services.Configure<CbrSettings>(
     builder.Configuration.GetSection(nameof(CbrSettings)));
 
-builder.Services.AddApplication();
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
+
+builder.Services.AddTransient<
+    IRequestHandler<UpdateCurrencyRatesCommand>,
+    UpdateCurrencyRatesCommandHandler>();
 
 builder.Services.AddHttpClient<ICbrClient, CbrClient>((serviceProvider, client) =>
 {

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\Finances.DAL.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Finances.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
