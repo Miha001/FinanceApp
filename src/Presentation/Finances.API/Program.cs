@@ -1,3 +1,4 @@
+using Finances.API.Endpoints;
 using Finances.Application;
 using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Currencies.Queries;
@@ -49,6 +50,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapCurrenciesEndpoints();
 
 app.Run();

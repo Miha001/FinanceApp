@@ -10,6 +10,7 @@ using Finances.Domain.Models.Dto;
 using Finances.Domain.Models.Dto.Auth;
 using Finances.Domain.Result;
 using Finances.Infrastructure.Extensions;
+using Finances.Users.API.Endpoints;
 using Infrastructure.Middlewares;
 using MediatR;
 
@@ -44,6 +45,6 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.MapControllers();
+app.MapAuthEndpoints();
 
 app.Run();
