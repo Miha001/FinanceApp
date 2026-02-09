@@ -5,6 +5,7 @@ using Finances.Application.Abstractions.Users.Commands;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
 using Finances.DAL.Implementations.Users;
+using Finances.Domain.Abstractions;
 using Finances.Domain.Db.Entities;
 using Finances.Domain.Models.Dto;
 using Finances.Domain.Models.Dto.Auth;
@@ -26,6 +27,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 

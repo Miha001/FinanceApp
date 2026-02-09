@@ -1,4 +1,6 @@
-﻿using System.Linq.Expressions;
+﻿using Finances.Domain.Db.Entities;
+using Finances.Domain.Models;
+using System.Linq.Expressions;
 
 namespace Finances.Application.Abstractions.Shared;
 
@@ -9,10 +11,12 @@ namespace Finances.Application.Abstractions.Shared;
 public interface IBaseRepository<TEntity>
 {
     /// <summary>
-    /// Возвращает все сущности как IQueryable.
+    /// Возвращает постраничный список сущностей
     /// </summary>
-    /// <returns></returns>
-    Task<IReadOnlyCollection<TEntity>> GetAll(bool asNoTracking = false, CancellationToken ct = default);
+    Task<IReadOnlyCollection<TEntity>> GetAllPaged(
+        bool asNoTracking = false,
+        CancellationToken ct = default,
+        Pagination? pagination = null);
 
     /// <summary>
     /// Создает новую сущность.
@@ -28,4 +32,20 @@ public interface IBaseRepository<TEntity>
     /// <param name="ct"></param>
     /// <returns>Boolean</returns>
     Task<bool> Exists(Expression<Func<TEntity, bool>> predicate, CancellationToken ct = default);
+
+    /// <summary>
+    /// Добавить список сущностей
+    /// </summary>
+    /// <param name="entities"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task AddRange(IEnumerable<TEntity> entities, CancellationToken ct = default);
+
+    /// <summary>
+    /// Получить полное количество сущностей по условию(предикату)
+    /// </summary>
+    /// <param name="predicate"></param>
+    /// <param name="ct"></param>
+    /// <returns></returns>
+    Task<int> GetCount(CancellationToken ct = default, Expression<Func<TEntity, bool>>? predicate = null);
 }

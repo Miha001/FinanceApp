@@ -1,8 +1,8 @@
-﻿using Finances.Application;
-using Finances.Application.Abstractions.Currencies;
+﻿using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Shared;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
+using Finances.Domain.Db.Entities;
 using Finances.Domain.Settings;
 using Finances.Infrastructure.Db.Context;
 using Finances.Worker.Abstractions;
@@ -35,6 +35,8 @@ builder.Services.AddHttpClient();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
+
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 // MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));

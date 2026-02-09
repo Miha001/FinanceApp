@@ -7,17 +7,17 @@
 /// <typeparam name="T">Тип элемента коллекции</typeparam>
 public class CollectionResult<T> : DataResult<IEnumerable<T>>
 {
-    private CollectionResult(IEnumerable<T> data, Error? error = null)
+    private CollectionResult(IEnumerable<T> data, int totalCount, Error? error = null)
         : base(data, error)
     {
-        Count = data?.Count() ?? 0;
+        TotalCount = totalCount;
     }
 
-    public int Count { get; }
+    public int TotalCount { get; }
 
-    public static new CollectionResult<T> Success(IEnumerable<T> data) =>
-        new(data);
+    public static new CollectionResult<T> Success(IEnumerable<T> data, int totalCount) =>
+        new(data, totalCount);
 
     public static new CollectionResult<T> Failure(int errorCode, string errorMessage) =>
-        new([], new Error(errorMessage, errorCode));
+        new([], default, new Error(errorMessage, errorCode));
 }

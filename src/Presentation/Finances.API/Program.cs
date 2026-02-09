@@ -23,9 +23,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
 builder.Services.AddSingleton(TimeProvider.System);
 
@@ -47,8 +50,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
-
-app.UseAuthorization();
 
 app.MapCurrenciesEndpoints();
 

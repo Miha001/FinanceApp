@@ -28,11 +28,7 @@ public static class CongifurationServicesExtension
         services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
         services.Configure<RedisSettings>(builder.Configuration.GetSection(nameof(RedisSettings)));
 
-        services.InitEntityRepositories();
-
         services.AddEndpointsApiExplorer();
-
-        services.AddControllers();
 
         services.AddAuthenticationAndAuthorization(builder);
         services.AddSwagger();
@@ -48,26 +44,6 @@ public static class CongifurationServicesExtension
     }
 
     /// <summary>
-    /// Внедрение зависимостей репозиториев для сущностей
-    /// </summary>
-    /// <param name="services"></param>
-    private static void InitEntityRepositories(this IServiceCollection services)
-    {
-        var types = new List<Type>()
-        {
-            typeof(User),
-            typeof(Currency),
-            typeof(UserCurrency),
-        };
-
-        foreach (var type in types)
-        {
-            var interfaceType = typeof(IBaseRepository<>).MakeGenericType(type);
-            var implementationType = typeof(BaseRepository<>).MakeGenericType(type);
-            services.AddScoped(interfaceType, implementationType);
-        }
-    }
-    /// <summary>
     /// Настройка кэширования
     /// </summary>
     /// <param name="services"></param>
@@ -75,8 +51,6 @@ public static class CongifurationServicesExtension
     private static void InitCaching(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ICacheService, CacheService>();
-        services.AddScoped<IPasswordHasher, PasswordHasher>();
-        services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
         var redisSettings = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
 
@@ -116,7 +90,6 @@ public static class CongifurationServicesExtension
     /// <param name="services"></param>
     public static void AddAuthenticationAndAuthorization(this IServiceCollection services, WebApplicationBuilder builder)
     {
-
         var jwtOptions = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>();
 
 

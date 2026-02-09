@@ -1,7 +1,9 @@
 ﻿using Finances.Application.Abstractions.Currencies.Queries;
 using Finances.Application.Abstractions.Users.Commands;
 using Finances.Domain.Constants.Route;
+using Finances.Domain.Models;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Finances.API.Endpoints;
 
@@ -13,22 +15,22 @@ public static class CurrenciesEndpoints
                        .RequireAuthorization();
 
         group.MapGet(Routes.Get.All, GetAll);
-        group.MapGet(Routes.Get.Courses, GetRates);
+        group.MapGet(Routes.Get.Courses, GetCourses);
         group.MapPost(Routes.Post.ToFavorites, AddToFavorites);
     }
 
-    private static async Task<IResult> GetAll(IMediator mediator)
+    private static async Task<IResult> GetAll([AsParameters] Pagination pagination, IMediator mediator)
     {
-        var result = await mediator.Send(new GetAllCurrenciesQuery());
+        var result = await mediator.Send(new GetAllCurrenciesQuery(pagination));
 
         return result.IsSuccess
             ? Results.Ok(result)
             : Results.BadRequest(result);
     }
 
-    private static async Task<IResult> GetRates(IMediator mediator)
+    private static async Task<IResult> GetCourses([AsParameters] Pagination pagination, IMediator mediator)
     {
-        var result = await mediator.Send(new GetCurrenciesByUserIdQuery());
+        var result = await mediator.Send(new GetCurrenciesByUserIdQuery(pagination));
 
         return result.IsSuccess
             ? Results.Ok(result)

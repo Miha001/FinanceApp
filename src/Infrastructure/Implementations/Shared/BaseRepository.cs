@@ -1,8 +1,9 @@
 ﻿using Finances.Application.Abstractions.Shared;
+using Finances.DAL.Extensions;
+using Finances.Domain.Models;
 using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Finances.DAL.Implementations.Shared;
 
@@ -19,14 +20,19 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public async Task<IReadOnlyCollection<TEntity>> GetAll(bool asNoTracking = false, CancellationToken ct = default)
+    public async Task<IReadOnlyCollection<TEntity>> GetAllPaged(
+        bool asNoTracking = false,
+        CancellationToken ct = default,
+        Pagination? pagination = null)
     {
         var query = _dbSet.AsQueryable();
 
         if (asNoTracking)
             query = query.AsNoTracking();
 
-        return await query.ToListAsync(ct);
+        return await query
+            .SkipAndTake(pagination)
+            .ToListAsync(ct);
     }
 
     /// <inheritdoc/>
@@ -39,9 +45,24 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
         return entity;
     }
 
+    /// <inheritdoc/>
     public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate, CancellationToken ct = default)
     {
         return await _dbSet.AnyAsync(predicate, ct);
+    }
+
+    ///<inheritdoc/>
+    public async Task AddRange(IEnumerable<TEntity> entities, CancellationToken ct = default)
+    {
+        await _dbSet.AddRangeAsync(entities, ct);
+    }
+
+    ///<inheritdoc/>
+    public async Task<int> GetCount(CancellationToken ct = default, Expression<Func<TEntity, bool>>? predicate = null)
+    {
+        return predicate is null
+            ? await _dbSet.CountAsync(ct)
+            : await _dbSet.CountAsync(predicate, ct);
     }
 
     /// <summary>

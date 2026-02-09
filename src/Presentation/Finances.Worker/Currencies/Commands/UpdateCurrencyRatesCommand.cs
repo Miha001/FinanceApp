@@ -11,7 +11,7 @@ public record UpdateCurrencyRatesCommand : IRequest;
 
 public class UpdateCurrencyRatesCommandHandler(
     ICbrClient cbrClient,
-    ICurrenciesRepository repository,
+    IBaseRepository<Currency> repo,
     IStateSaveChanges stateSaveChange,
     ILogger<UpdateCurrencyRatesCommandHandler> logger) : IRequestHandler<UpdateCurrencyRatesCommand>
 {
@@ -21,7 +21,7 @@ public class UpdateCurrencyRatesCommandHandler(
 
         var cbrRates = await cbrClient.GetCurrencies(ct);
 
-        var existingCurrencies = await repository.GetAll(ct);
+        var existingCurrencies = await repo.GetAllPaged(false, ct);
         var currenciesDict = existingCurrencies.ToDictionary(c => c.Name, c => c);
 
         var currenciesToAdd = new List<Currency>();
@@ -42,7 +42,7 @@ public class UpdateCurrencyRatesCommandHandler(
 
         if (currenciesToAdd.Count > 0)
         {
-            await repository.AddRange(currenciesToAdd, ct);
+            await repo.AddRange(currenciesToAdd, ct);
             logger.LogInformation("Add {Count} new currencies.", currenciesToAdd.Count);
         }
 
