@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
+    .AddUserSecrets<Program>()
     .Build();
 
 var conString = configuration.GetConnectionString("Default");
@@ -29,13 +30,12 @@ Task.Run(getNameTask);
 
 Console.WriteLine("Введите название целевой миграции или оставьте пустую строку, чтобы обновить всё, ожидание 5 секунд.");
 var delay = Task.Delay(TimeSpan.FromSeconds(5));
-var seonds = 0;
+var seconds = 0;
 while(!delay.IsCompleted)
 {
-    //Отсчёт секунд
-    seonds++;
+    seconds++;
     Thread.Sleep(TimeSpan.FromSeconds(1));
-    Console.WriteLine(seonds);
+    Console.WriteLine(seconds);
 }
 
 try

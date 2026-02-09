@@ -7,6 +7,7 @@ using Finances.Domain.Settings;
 using Finances.Infrastructure.Db.Context;
 using Finances.Worker.Abstractions;
 using Finances.Worker.Currencies.Commands;
+using Finances.Worker.Settings;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,29 +21,32 @@ var builder = Host.CreateApplicationBuilder(args);
 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 builder.Configuration
-    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-
-var connectionString = builder.Configuration.GetConnectionString("Default")
-                        ?? throw new InvalidOperationException("Строка подключения не найдена.");
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    .AddUserSecrets<Program>();
 
 builder.Services.Configure<CbrSettings>(
     builder.Configuration.GetSection(nameof(CbrSettings)));
+
+var workerSettings = builder.Configuration
+    .GetSection(nameof(WorkerSettings))
+    .Get<WorkerSettings>() ?? new();
 
 builder.Services.AddHttpClient();
 builder.Services.AddDbContext<DataContext>();
 builder.Services.AddScoped<ICurrenciesRepository, CurrenciesRepository>();
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
-builder.Services.AddTransient<
-    IRequestHandler<UpdateCurrencyRatesCommand>,
-    UpdateCurrencyRatesCommandHandler>();
+// MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddTransient<IRequestHandler<UpdateCurrencyRatesCommand>, UpdateCurrencyRatesCommandHandler>();
 
 builder.Services.AddHttpClient<ICbrClient, CbrClient>((serviceProvider, client) =>
 {
     var settings = serviceProvider.GetRequiredService<IOptions<CbrSettings>>().Value;
 
     client.BaseAddress = new Uri(settings.Url);
-    client.Timeout = TimeSpan.FromSeconds(30); //TODO: в конфигурацию
+
+    client.Timeout = TimeSpan.FromSeconds(settings.TimeoutInSeconds);
 });
 
 builder.Services.AddQuartz(q =>
@@ -51,18 +55,18 @@ builder.Services.AddQuartz(q =>
     q.AddJob<CurrencyUpdateJob>(opts => opts.WithIdentity(jobKey));
 
     q.AddTrigger(opts => opts
-        .ForJob(jobKey) 
+        .ForJob(jobKey)
         .WithIdentity("CurrencyUpdateJobTrigger")
         .WithSimpleSchedule(s => s
             .RepeatForever()
-            .WithIntervalInMinutes(60)) // Запуск каждые 60 минут //TODO: вынести в конфигурацию
+            .WithIntervalInMinutes(workerSettings.CurrencyUpdateIntervalInMinutes))
         .StartNow()
     );
 });
 
 builder.Services.AddQuartzHostedService(opt =>
 {
-    opt.WaitForJobsToComplete = true; 
+    opt.WaitForJobsToComplete = true;
 });
 
 var host = builder.Build();
