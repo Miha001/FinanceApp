@@ -1,6 +1,8 @@
 ﻿using Finances.Application.Abstractions.Shared;
 using Finances.Infrastructure.Db.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using System.Text;
 
 namespace Finances.DAL.Implementations.Shared;
 
@@ -28,12 +30,6 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     }
 
     /// <inheritdoc/>
-    public async Task<int> SaveChangesAsync(CancellationToken ct = default)
-    {
-        return await _dbContext.SaveChangesAsync(ct);
-    }
-
-    /// <inheritdoc/>
     public async Task<TEntity> Create(TEntity entity, CancellationToken ct = default)
     {
         ValidateEntityOnNull(entity);
@@ -41,6 +37,11 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
         await _dbSet.AddAsync(entity, ct);
 
         return entity;
+    }
+
+    public async Task<bool> Exists(Expression<Func<TEntity, bool>> predicate, CancellationToken ct = default)
+    {
+        return await _dbSet.AnyAsync(predicate, ct);
     }
 
     /// <summary>

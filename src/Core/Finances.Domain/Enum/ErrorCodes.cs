@@ -5,6 +5,9 @@ public enum ErrorCodes
     UserNotFound = 0,
     UserAlreadyExists = 2,
 
+    //Currency
+    CurrencyAlreadyInFavorites = 50,
+
     //Статус коды для аутентификации и авторизации
     InvalidClientRequest = 100,
     PasswordIsWrong = 101,
