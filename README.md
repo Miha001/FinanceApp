@@ -1,3 +1,4 @@
+
 # FinanceApp
 
 Необходимо реализовать сервис со следующим функционалом на языке C#
@@ -44,3 +45,5 @@ currency
 Users.API: http://localhost:44398/swagger/index.html
 
 Finances.API: http://localhost:44357/swagger/index.html
+
+Gateway будет добавлен позже
