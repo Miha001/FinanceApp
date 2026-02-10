@@ -40,7 +40,7 @@ currency
 ***Для начала использования:***
 1. Запустить Docker Desktop
 2. Вызвать команду `docker compose up --build -d` в папке с файлом docker-compose.yml
-3. 
+   
 Users.API: http://localhost:44398/swagger/index.html
 
 Finances.API: http://localhost:44357/swagger/index.html
