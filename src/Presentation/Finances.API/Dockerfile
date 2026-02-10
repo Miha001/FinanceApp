@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS build
 WORKDIR /src
 
 COPY ["src/Presentation/Finances.API/Finances.API.csproj", "src/Presentation/Finances.API/"]
@@ -9,13 +9,18 @@ COPY ["src/Infrastructure/Finances.DAL.csproj", "src/Infrastructure/"]
 RUN dotnet restore "src/Presentation/Finances.API/Finances.API.csproj"
 
 COPY . .
-WORKDIR "/src/src/Presentation/Finances.API"
-RUN dotnet build "Finances.API.csproj" -c Release -o /app/build
 
-FROM build AS publish
-RUN dotnet publish "Finances.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "src/Presentation/Finances.API/Finances.API.csproj" \
+    -c Release \
+    -o /app/publish \
+    /p:UseAppHost=false \
+    --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+ENV ASPNETCORE_URLS=http://+:8080
+USER app
+
+COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Finances.API.dll"]

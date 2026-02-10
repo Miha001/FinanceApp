@@ -21,6 +21,17 @@ public class CbrClient : ICbrClient
         var response = await _httpClient.GetAsync(string.Empty, ct); // URL пустой, т.к. BaseAddress задан в Program.cs
         response.EnsureSuccessStatusCode();
 
+        if (response.RequestMessage?.RequestUri?.ToString().Contains("/Error/") == true)
+        {
+            throw new InvalidOperationException($"Invalid CBR URL. Redirected to: {response.RequestMessage.RequestUri}");
+        }
+
+        if (response.Content.Headers.ContentType?.MediaType == "text/html")
+        {
+            var htmlContent = await response.Content.ReadAsStringAsync(ct);
+            throw new InvalidOperationException($"Received HTML instead of XML. Check your URL configuration. Content preview: {htmlContent[..100]}");
+        }
+
         var bytes = await response.Content.ReadAsByteArrayAsync(ct);
         var xmlContent = _windows1251.GetString(bytes);
 
