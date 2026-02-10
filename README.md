@@ -1,3 +1,4 @@
+
 # FinanceApp
 
 Необходимо реализовать сервис со следующим функционалом на языке C#
@@ -38,7 +39,11 @@ currency
 7) Проект с unit-тестами для сервисов юзера и финансов. Для фонового не надо.
 
 ***Для начала использования:***
+1. Запустить Docker Desktop
+2. Вызвать команду `docker compose up --build -d` в папке с файлом docker-compose.yml
+   
+Users.API: http://localhost:44398/swagger/index.html
 
-1. Прописать команду `docker compose up -d` в папке с файлом docker-compose.yml для Postgres и Redis(остальные API будут добавлены позже)
-2. Запустить MigrationsRunner для выполнения миграций БД
-3. Развернуть все API(Gateway, Users.API, Finances.API) и фоновый Worker
+Finances.API: http://localhost:44357/swagger/index.html
+
+Gateway будет добавлен позже
