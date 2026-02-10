@@ -29,7 +29,19 @@ services:
         networks:
             - financesnw
 
+    seq:
+      image: datalust/seq:latest
+      container_name: finances-seq
+      environment:
+        - ACCEPT_EULA=Y
+        - SEQ_FIRSTRUN_ADMINPASSWORD=admin
+      ports:
+        - "5341:80"
+      volumes:
+        - seq_data:/data
+
     #services
+
     #finances-gateway:
     #    image: finances-gateway
     #    build:
@@ -41,6 +53,8 @@ services:
     #    ports:
     #      - "5000:8080"
     #    depends_on:
+    #      seq:
+    #        condition: service_started
     #      migrations-runner:
     #        condition: service_completed_successfully
     #      redis:
@@ -55,7 +69,11 @@ services:
             dockerfile: /src/Presentation/Finances.MigrationsRunner/Dockerfile
         environment:
              - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
+             - Serilog__WriteTo__1__Args__serverUrl=http://seq
+             - Serilog__Properties__Application=Finances.MigrationsRunner
         depends_on:
+            seq:
+              condition: service_started
             finances.db:
                 condition: service_healthy
         networks:
@@ -71,9 +89,13 @@ services:
           - JwtSettings__Key=OjGwxqUcDcwEMsMaueVZRDZUAkgcukaBaatIMTbFXAgaiAJKPeUkJwziutSU
           - RedisSettings__Url=redis:6379
           - ASPNETCORE_ENVIRONMENT=Development
+          - Serilog__WriteTo__1__Args__serverUrl=http://seq
+          - Serilog__Properties__Application=Finances.API
         ports:
           - "44357:8080"
         depends_on:
+          seq:
+            condition: service_started
           migrations-runner:
             condition: service_completed_successfully
           redis:
@@ -91,9 +113,13 @@ services:
           - JwtSettings__Key=OjGwxqUcDcwEMsMaueVZRDZUAkgcukaBaatIMTbFXAgaiAJKPeUkJwziutSU
           - RedisSettings__Url=redis:6379
           - ASPNETCORE_ENVIRONMENT=Development
+          - Serilog__WriteTo__1__Args__serverUrl=http://seq
+          - Serilog__Properties__Application=Finances.Users.API
         ports:
           - "44398:8080"
         depends_on:
+          seq:
+            condition: service_started
           migrations-runner:
             condition: service_completed_successfully
           redis:
@@ -109,7 +135,11 @@ services:
         environment:
           - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
           - WorkerSettings__CurrencyUpdateIntervalInMinutes=60
+          - Serilog__WriteTo__1__Args__serverUrl=http://seq
+          - Serilog__Properties__Application=Finances.Worker
         depends_on:
+          seq:
+            condition: service_started
           migrations-runner:
             condition: service_completed_successfully
         networks:
@@ -119,3 +149,4 @@ networks:
     financesnw:
 volumes:
   postgres_data:
+  seq_data:

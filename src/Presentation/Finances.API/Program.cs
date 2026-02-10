@@ -13,8 +13,12 @@ using Finances.Domain.Result;
 using Finances.Infrastructure.Extensions;
 using Infrastructure.Middlewares;
 using MediatR;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var config = builder.Configuration;
 
 builder.Services.AddControllers();
 builder.Services.ConfigureServices(builder);
