@@ -1,25 +1,121 @@
-version: '3.8'
-
 services:
-    finance.db:
+    #infrastructure
+    finances.db:
         image: postgres
-        container_name: financedb
+        container_name: finances.db
         environment:
             - POSTGRES_USER=admin
-            - POSTGRES_PASSWORD=admin
-            - POSTGRES_DB=financedb
+            - POSTGRES_PASSWORD=super-secret-password
+            - POSTGRES_DB=financesdb
         restart: always
         ports:
             - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U admin -d financedb"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+        networks:
+            - financesnw
 
-    finance.cache:
+    redis:
         image: redis:latest
-        container_name: finance.cache
+        container_name: finances.redis
         restart: always
         ports:
             - "6379:6379"
         networks:
-            - financenw
+            - financesnw
+
+    #services
+    #finances-gateway:
+    #    image: finances-gateway
+    #    build:
+    #      context: .
+    #      dockerfile: /src/Presentation/Finances.Gateway/Dockerfile
+    #    environment:
+    #      - RedisSettings__Url=redis:6379
+    #      - ASPNETCORE_ENVIRONMENT=Development
+    #    ports:
+    #      - "5000:8080"
+    #    depends_on:
+    #      migrations-runner:
+    #        condition: service_completed_successfully
+    #      redis:
+    #        condition: service_started
+    #    networks:
+    #        - financesnw
+
+    migrations-runner:
+        image: finances-migrations-runner
+        build:
+            context: .
+            dockerfile: /src/Presentation/Finances.MigrationsRunner/Dockerfile
+        environment:
+             - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
+        depends_on:
+            finances.db:
+                condition: service_healthy
+        networks:
+            - financesnw
+
+    finances-api:
+        image: finances-api
+        build:
+          context: .
+          dockerfile: /src/Presentation/Finances.API/Dockerfile
+        environment:
+          - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
+          - JwtSettings__Key=OjGwxqUcDcwEMsMaueVZRDZUAkgcukaBaatIMTbFXAgaiAJKPeUkJwziutSU
+          - RedisSettings__Url=redis:6379
+          - ASPNETCORE_ENVIRONMENT=Development
+        ports:
+          - "44357:8080"
+        depends_on:
+          migrations-runner:
+            condition: service_completed_successfully
+          redis:
+            condition: service_started
+        networks:
+            - financesnw
+
+    finances-users-api:
+        image: finances-users-api
+        build:
+          context: .
+          dockerfile: /src/Presentation/Finances.Users.API/Dockerfile
+        environment:
+          - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
+          - JwtSettings__Key=OjGwxqUcDcwEMsMaueVZRDZUAkgcukaBaatIMTbFXAgaiAJKPeUkJwziutSU
+          - RedisSettings__Url=redis:6379
+          - ASPNETCORE_ENVIRONMENT=Development
+        ports:
+          - "44398:8080"
+        depends_on:
+          migrations-runner:
+            condition: service_completed_successfully
+          redis:
+            condition: service_started
+        networks:
+            - financesnw
+
+    worker:
+        image: finances-worker
+        build:
+          context: .
+          dockerfile: /src/Presentation/Finances.Worker/Dockerfile
+        environment:
+          - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
+          - WorkerSettings__CurrencyUpdateIntervalInMinutes=60
+        depends_on:
+          migrations-runner:
+            condition: service_completed_successfully
+        networks:
+            - financesnw
 
 networks:
-    financenw:
+    financesnw:
+volumes:
+  postgres_data:

@@ -1,9 +1,6 @@
 ﻿using Finances.Application.Abstractions.Shared;
 using Finances.Application.Validations.FluentValidator;
 using Finances.DAL.Implementations.Shared;
-using Finances.DAL.Implementations.Users;
-using Finances.Domain.Abstractions;
-using Finances.Domain.Db.Entities;
 using Finances.Domain.Settings;
 using Finances.Infrastructure.Db.Context;
 using FluentValidation;
@@ -17,6 +14,7 @@ using Serilog;
 using System.Text;
 
 namespace Finances.Infrastructure.Extensions;
+
 public static class CongifurationServicesExtension
 {
     /// <summary>
@@ -38,6 +36,7 @@ public static class CongifurationServicesExtension
             configuration.ReadFrom.Configuration(context.Configuration)
                          .ReadFrom.Services(services);
         });
+
         services.InitCaching(builder.Configuration);
 
         services.InitFluentValidators();

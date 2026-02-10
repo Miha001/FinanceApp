@@ -9,6 +9,7 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
     .AddUserSecrets<Program>()
+    .AddEnvironmentVariables()
     .Build();
 
 var conString = configuration.GetConnectionString("Default");

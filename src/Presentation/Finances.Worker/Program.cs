@@ -22,7 +22,8 @@ Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-    .AddUserSecrets<Program>();
+    .AddUserSecrets<Program>()
+    .AddEnvironmentVariables();
 
 builder.Services.Configure<CbrSettings>(
     builder.Configuration.GetSection(nameof(CbrSettings)));
