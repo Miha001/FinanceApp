@@ -14,8 +14,11 @@ using Finances.Infrastructure.Extensions;
 using Finances.Users.API.Endpoints;
 using Infrastructure.Middlewares;
 using MediatR;
+using Finances.DAL.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var config = builder.Configuration;
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -40,6 +43,8 @@ builder.Services.AddTransient<IRequestHandler<CreateUserCommand, DataResult<User
 builder.Services.AddTransient<IRequestHandler<LoginUserCommand, DataResult<TokenDto>>, LoginUserCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<LogoutUserCommand, DataResult<bool>>, LogoutUserCommandHandler>();
 builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, DataResult<UserNameDto>>, RegisterUserCommandHandler>();
+
+builder.AddOpenTelemetry(config, "Finances.Users.API");
 
 var app = builder.Build();
 

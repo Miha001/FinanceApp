@@ -16,6 +16,12 @@ RUN dotnet publish "Finances.Worker.csproj" -c Release -o /app/publish /p:UseApp
 FROM mcr.microsoft.com/dotnet/aspnet:10.0-alpine AS final
 WORKDIR /app
 
+# Устанавливаем библиотеку поддержки культур
+RUN apk add --no-cache icu-libs
+
+# Отключаем Invariant Mode (разрешаем использовать культуры)
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
 ENV ASPNETCORE_URLS=http://+:8080
 USER app
 

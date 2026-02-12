@@ -35,8 +35,10 @@ services:
       environment:
         - ACCEPT_EULA=Y
         - SEQ_FIRSTRUN_ADMINPASSWORD=admin
+        - SEQ_INGESTION_OPENTELEMETRY_GRPC_PORT=4317 
       ports:
         - "5341:80"
+        - "4317:4317"
       volumes:
         - seq_data:/data
       networks:        

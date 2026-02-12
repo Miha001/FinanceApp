@@ -1,10 +1,10 @@
 using Finances.API.Endpoints;
-using Finances.Application;
 using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Currencies.Queries;
 using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
 using Finances.Application.Abstractions.Users.Commands;
+using Finances.DAL.Extensions;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
 using Finances.DAL.Implementations.Users;
@@ -15,7 +15,6 @@ using Infrastructure.Middlewares;
 using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 var config = builder.Configuration;
 
@@ -44,6 +43,7 @@ builder.Services.AddTransient<IRequestHandler<GetCurrenciesByUserIdQuery, Collec
 builder.Services.AddTransient<IRequestHandler<GetAllCurrenciesQuery, CollectionResult<CourseDto>>, GetAllCurrenciesHandler>();
 builder.Services.AddTransient<IRequestHandler<CreateUserCurrencyCommand, DataResult<bool>>, CreateUserCurrencyHandler>();
 
+builder.AddOpenTelemetry(config, "Finances.API");
 
 var app = builder.Build();
 

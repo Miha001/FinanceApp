@@ -1,5 +1,6 @@
 ﻿using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Shared;
+using Finances.DAL.Extensions;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
 using Finances.Domain.Settings;
@@ -25,6 +26,8 @@ try
 {
     var builder = Host.CreateApplicationBuilder(args);
     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+    var config = builder.Configuration;
 
     builder.Services.AddSerilog((services, lc) => lc
     .ReadFrom.Configuration(builder.Configuration)
@@ -90,6 +93,8 @@ try
     {
         opt.WaitForJobsToComplete = true;
     });
+
+    builder.AddOpenTelemetry(config,"Finances.Worker");
 
     var host = builder.Build();
 
