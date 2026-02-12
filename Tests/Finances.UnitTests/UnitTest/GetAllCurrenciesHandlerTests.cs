@@ -35,6 +35,8 @@ public class GetAllCurrenciesHandlerTests
         _repoMock.Setup(r => r.GetAllPaged(It.IsAny<bool>(), It.IsAny<CancellationToken>(), pagination))
             .ReturnsAsync(currencies);
 
+        _repoMock.Setup(r => r.GetCount(It.IsAny<CancellationToken>())).ReturnsAsync(currencies.Count);
+
         var query = new GetAllCurrenciesQuery(pagination);
 
         //Act

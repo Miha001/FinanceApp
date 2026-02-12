@@ -1,6 +1,4 @@
-﻿using Finances.Domain.Abstractions;
-
-namespace Finances.Domain.Db.Entities;
+﻿namespace Finances.Domain.Db.Entities;
 
 public class User : IEntityId<Guid>
 {
