@@ -12,6 +12,7 @@ Finances is a production-ready, modular system designed for personal finance tra
 | :--- | :--- | :--- |
 | **Language** | C# 14 / .NET 10 | Modern cross-platform framework |
 | **Architecture** | Modular Monolith | DDD, CQRS, Clean Architecture |
+| **Security**	| ASP.NET Core Rate Limiting  |	DDoS & brute-force protection |
 | **Database** | PostgreSQL 17 | Relational Database (Docker) |
 | **ORM** | EF Core 10 | Code-First migrations |
 | **Caching** | Redis | Distributed Cache & Locking |
