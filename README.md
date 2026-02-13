@@ -1,8 +1,10 @@
 # FinancesApp — Personal Finance Demo Management System
-
 ![Build Status](https://img.shields.io/github/actions/workflow/status/yourusername/finances/dotnet.yml?style=flat-square)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)
 ![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=flat-square)
+
+
+Finances is a production-ready, modular system designed for personal finance tracking and currency management. The application provides a robust infrastructure for synchronizing real-time exchange rates from the Central Bank of Russia (CBR) and managing user-specific currency preferences.
 
 ## Technology Stack
 
