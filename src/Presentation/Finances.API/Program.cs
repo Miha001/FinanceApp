@@ -45,6 +45,8 @@ builder.Services.AddTransient<IRequestHandler<CreateUserCurrencyCommand, DataRes
 
 builder.AddOpenTelemetry(config, "Finances.API");
 
+builder.Services.AddRateLimiter(config);
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -54,5 +56,7 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.MapCurrenciesEndpoints();
+
+app.UseRateLimiter();
 
 app.Run();

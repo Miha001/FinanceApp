@@ -2,6 +2,7 @@ using Finances.Application.Abstractions.Currencies;
 using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
 using Finances.Application.Abstractions.Users.Commands;
+using Finances.DAL.Extensions;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
 using Finances.DAL.Implementations.Users;
@@ -14,7 +15,6 @@ using Finances.Infrastructure.Extensions;
 using Finances.Users.API.Endpoints;
 using Infrastructure.Middlewares;
 using MediatR;
-using Finances.DAL.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +46,8 @@ builder.Services.AddTransient<IRequestHandler<RegisterUserCommand, DataResult<Us
 
 builder.AddOpenTelemetry(config, "Finances.Users.API");
 
+builder.Services.AddRateLimiter(config);
+
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -54,6 +56,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.MapAuthEndpoints();
+app.UseRateLimiter();
 
+app.MapAuthEndpoints();
 app.Run();

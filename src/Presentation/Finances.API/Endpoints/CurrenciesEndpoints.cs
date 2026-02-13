@@ -3,7 +3,6 @@ using Finances.Application.Abstractions.Users.Commands;
 using Finances.Domain.Constants.Route;
 using Finances.Domain.Models;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Finances.API.Endpoints;
 
@@ -12,7 +11,8 @@ public static class CurrenciesEndpoints
     public static void MapCurrenciesEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("api/currencies")
-                       .RequireAuthorization();
+                       .RequireAuthorization()
+                       .RequireRateLimiting("fixed-smart");
 
         group.MapGet(Routes.Get.All, GetAll);
         group.MapGet(Routes.Get.Courses, GetCourses);

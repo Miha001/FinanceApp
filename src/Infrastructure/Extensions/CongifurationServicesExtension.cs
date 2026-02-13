@@ -6,12 +6,15 @@ using Finances.Infrastructure.Db.Context;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Serilog;
+using System.Security.Claims;
 using System.Text;
+using System.Threading.RateLimiting;
 
 namespace Finances.Infrastructure.Extensions;
 
@@ -41,6 +44,50 @@ public static class CongifurationServicesExtension
 
         services.InitFluentValidators();
     }
+
+    /// <summary>
+    /// Настройка лимита лимита запросов от спама и брутфорса
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    public static void AddRateLimiter(this IServiceCollection services, IConfiguration configuration) =>
+        services.AddRateLimiter(options =>
+        {
+            var policyConfig = configuration.GetSection("RateLimiting");
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+            // Если юзер залогинен -> лимитируем по ID. Если нет -> по IP.
+            options.AddPolicy("fixed-smart", httpContext =>
+            {
+                var userId = httpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    return GetFixedWindowLimiter(userId, policyConfig);
+                }
+
+                var ip = httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown";
+
+                return GetFixedWindowLimiter(ip, policyConfig);
+            });
+        });
+
+    /// <summary>
+    /// Получить RateLimitPartition
+    /// </summary>
+    /// <param name="partitionKey"></param>
+    /// <param name="config"></param>
+    /// <returns></returns>
+    private static RateLimitPartition<string> GetFixedWindowLimiter(string partitionKey, IConfiguration config)
+        => RateLimitPartition.GetFixedWindowLimiter(
+                        partitionKey: partitionKey,
+                        factory: _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = config.GetValue<int>("PermitLimit"),
+                            Window = TimeSpan.FromSeconds(config.GetValue<int>("WindowSeconds")),
+                            QueueLimit = config.GetValue<int>("QueueLimit"),
+                            AutoReplenishment = true
+                        });
 
     /// <summary>
     /// Настройка кэширования
