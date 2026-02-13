@@ -1,5 +1,5 @@
 # FinancesApp — Personal Finance Demo Management System
-![Build Status](https://img.shields.io/github/actions/workflow/status/Miha001/finances/dotnet.yml?style=flat-square)
+![Build Status](https://img.shields.io/github/actions/workflow/status/Miha001/FinanceApp/dotnet.yml?style=flat-square)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen?style=flat-square)
 ![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=flat-square)
 
