@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.Common;
 using Testcontainers.PostgreSql;
@@ -45,10 +46,14 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     {
         await _postgres.StartAsync();
 
-        using var scope = Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+        var options = new DbContextOptionsBuilder<DataContext>()
+            .UseNpgsql(_postgres.GetConnectionString())
+            .Options;
 
-        await dbContext.Database.MigrateAsync();
+        var dummyConfig = new ConfigurationBuilder().Build();
+
+        using var context = new DataContext(options, dummyConfig);
+        await context.Database.MigrateAsync();
     }
 
     public new Task DisposeAsync()

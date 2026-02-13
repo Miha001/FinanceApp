@@ -22,9 +22,15 @@ public class DataContext(DbContextOptions<DataContext> options, IConfiguration c
     public DbSet<Currency> Currencies { get; set; }
     public DbSet<UserCurrency> UserCurrencies { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) =>
-        optionsBuilder.UseNpgsql(configuration.GetConnectionString("Default"), b => b.EnableRetryOnFailure()
-        .MigrationsAssembly(typeof(DataContext).Assembly.FullName));
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString("Default"), b => b
+                .EnableRetryOnFailure()
+                .MigrationsAssembly(typeof(DataContext).Assembly.FullName));
+        }
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) => modelBuilder
         .ApplyConfiguration(new UserConfiguration())
