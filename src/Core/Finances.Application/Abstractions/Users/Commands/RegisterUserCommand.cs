@@ -6,10 +6,11 @@ using Finances.Domain.Models.Dto.Auth;
 using Finances.Domain.Resources;
 using Finances.Domain.Result;
 using MediatR;
+using System.Text.Json.Serialization;
 
 namespace Finances.Application.Abstractions.Users.Commands;
 
-public record RegisterUserCommand(string Name, string Password) : IRequest<DataResult<UserNameDto>>;
+public record RegisterUserCommand(string Name, [property: JsonIgnore] string Password) : IRequest<DataResult<UserNameDto>>;
 
 public class RegisterUserCommandHandler(
     IUserRepository userRepository,

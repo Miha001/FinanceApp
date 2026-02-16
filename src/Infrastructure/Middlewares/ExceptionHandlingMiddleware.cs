@@ -6,6 +6,7 @@ using System.Net.Mime;
 using ILogger = Serilog.ILogger;
 
 namespace Infrastructure.Middlewares;
+
 public class ExceptionHandlingMiddleware(ILogger logger, RequestDelegate next)
 {
     public async Task InvokeAsync(HttpContext httpContext)
@@ -16,7 +17,7 @@ public class ExceptionHandlingMiddleware(ILogger logger, RequestDelegate next)
         }
         catch (Exception ex)
         {
-                await HandleExceptionAsync(httpContext, ex);
+            await HandleExceptionAsync(httpContext, ex);
         }
     }
 

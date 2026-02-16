@@ -4,6 +4,7 @@ using Finances.Application.Abstractions.Currencies.Queries;
 using Finances.Application.Abstractions.Shared;
 using Finances.Application.Abstractions.Users;
 using Finances.Application.Abstractions.Users.Commands;
+using Finances.Application.Behaviors;
 using Finances.DAL.Extensions;
 using Finances.DAL.Implementations.Carrencies;
 using Finances.DAL.Implementations.Shared;
@@ -13,6 +14,7 @@ using Finances.Domain.Result;
 using Finances.Infrastructure.Extensions;
 using Infrastructure.Middlewares;
 using MediatR;
+using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Services.ConfigureServices(builder);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IAuditLogService, MongoAuditLogService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IStateSaveChanges, StateSaveChanges>();
 
@@ -36,7 +39,25 @@ builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserProvider, CurrentUserProvider>();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(Program).Assembly);
+
+    cfg.AddOpenBehavior(typeof(AuditLogBehavior<,>));
+});
+
+builder.Services.AddSingleton<IMongoClient>(sp =>
+{
+    var connString = config.GetConnectionString("MongoDb");
+    return new MongoClient(connString);
+});
+
+builder.Services.AddSingleton<IMongoDatabase>(sp =>
+{
+    var client = sp.GetRequiredService<IMongoClient>();
+    var databaseName = config["MongoDb:DatabaseName"];
+    return client.GetDatabase(databaseName);
+});
 
 //manual setup of handlers
 builder.Services.AddTransient<IRequestHandler<GetCurrenciesByUserIdQuery, CollectionResult<CourseDto>>, GetCurrenciesByUserIdHandler>();

@@ -5,6 +5,7 @@ using Finances.Domain.Enum;
 using Finances.Domain.Resources;
 using Finances.Domain.Result;
 using MediatR;
+using System.Text.Json.Serialization;
 
 namespace Finances.Application.Abstractions.Users.Commands;
 
@@ -13,7 +14,7 @@ namespace Finances.Application.Abstractions.Users.Commands;
 /// </summary>
 /// <param name="Name"></param>
 /// <param name="Password"></param>
-public sealed record CreateUserCommand(string Name, string Password) : IRequest<DataResult<User>>;
+public sealed record CreateUserCommand(string Name, [property: JsonIgnore] string Password) : IRequest<DataResult<User>>;
 
 public class CreateUserCommandHandler(
     IUserRepository userRepository,

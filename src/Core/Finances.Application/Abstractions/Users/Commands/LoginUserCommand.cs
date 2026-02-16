@@ -5,10 +5,11 @@ using Finances.Domain.Models.Dto;
 using Finances.Domain.Resources;
 using Finances.Domain.Result;
 using MediatR;
+using System.Text.Json.Serialization;
 
 namespace Finances.Application.Abstractions.Users.Commands;
 
-public record LoginUserCommand(string Name, string Password) : IRequest<DataResult<TokenDto>>;
+public record LoginUserCommand(string Name, [property: JsonIgnore] string Password) : IRequest<DataResult<TokenDto>>;
 
 public class LoginUserCommandHandler(
     IUserRepository userRepository,

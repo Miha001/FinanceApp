@@ -2,10 +2,11 @@
 using Finances.Domain.Result;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json.Serialization;
 
 namespace Finances.Application.Abstractions.Users.Commands;
 
-public record LogoutUserCommand(string Token, Guid UserId) : IRequest<DataResult<bool>>;
+public record LogoutUserCommand([property: JsonIgnore] string Token, Guid UserId) : IRequest<DataResult<bool>>;
 
 
 public class LogoutUserCommandHandler(ICacheService cacheService)

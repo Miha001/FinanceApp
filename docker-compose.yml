@@ -1,5 +1,19 @@
 services:
     #infrastructure
+    mongo:
+        image: mongo:latest
+        container_name: finances.mongo
+        restart: always
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=secret
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongo_data:/data/db
+        networks:
+            - financesnw
+
     finances.db:
         image: postgres
         container_name: finances.db
@@ -89,6 +103,7 @@ services:
           context: .
           dockerfile: /src/Presentation/Finances.API/Dockerfile
         environment:
+          - ConnectionStrings__MongoDb=mongodb://admin:secret@mongo:27017
           - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
           - JwtSettings__Key=OjGwxqUcDcwEMsMaueVZRDZUAkgcukaBaatIMTbFXAgaiAJKPeUkJwziutSU
           - RedisSettings__Url=redis:6379
@@ -113,6 +128,7 @@ services:
           context: .
           dockerfile: /src/Presentation/Finances.Users.API/Dockerfile
         environment:
+          - ConnectionStrings__MongoDb=mongodb://admin:secret@mongo:27017
           - ConnectionStrings__Default=Host=finances.db;Database=financesdb;Username=admin;Password=super-secret-password
           - JwtSettings__Key=OjGwxqUcDcwEMsMaueVZRDZUAkgcukaBaatIMTbFXAgaiAJKPeUkJwziutSU
           - RedisSettings__Url=redis:6379
@@ -154,3 +170,4 @@ networks:
 volumes:
   postgres_data:
   seq_data:
+  mongo_data:  
