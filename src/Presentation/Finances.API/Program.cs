@@ -46,18 +46,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.AddOpenBehavior(typeof(AuditLogBehavior<,>));
 });
 
-builder.Services.AddSingleton<IMongoClient>(sp =>
-{
-    var connString = config.GetConnectionString("MongoDb");
-    return new MongoClient(connString);
-});
-
-builder.Services.AddSingleton<IMongoDatabase>(sp =>
-{
-    var client = sp.GetRequiredService<IMongoClient>();
-    var databaseName = config["MongoDb:DatabaseName"];
-    return client.GetDatabase(databaseName);
-});
+builder.Services.AddMongo(config);
 
 //manual setup of handlers
 builder.Services.AddTransient<IRequestHandler<GetCurrenciesByUserIdQuery, CollectionResult<CourseDto>>, GetCurrenciesByUserIdHandler>();

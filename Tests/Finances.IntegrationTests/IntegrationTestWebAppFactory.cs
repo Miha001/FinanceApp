@@ -1,4 +1,5 @@
-﻿using DotNet.Testcontainers.Containers;
+﻿using Finances.Application.Abstractions.Shared;
+using Finances.Domain.Models.Dto.Shared;
 using Finances.Infrastructure.Db.Context;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System.Data.Common;
 using Testcontainers.PostgreSql;
 
@@ -23,6 +25,18 @@ public class IntegrationTestWebAppFactory : WebApplicationFactory<Program>, IAsy
     {
         builder.ConfigureTestServices(services =>
         {
+            var auditDescriptor = services.SingleOrDefault(
+            d => d.ServiceType == typeof(IAuditLogService));
+
+            if (auditDescriptor != null)
+                services.Remove(auditDescriptor);
+            var mockAudit = new Mock<IAuditLogService>();
+
+            mockAudit
+                .Setup(x => x.Log(It.IsAny<AuditLogEntry>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+
+            services.AddSingleton(mockAudit.Object);
             var descriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<DataContext>));
 

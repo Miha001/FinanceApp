@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using MongoDB.Driver;
 using Serilog;
 using System.Security.Claims;
 using System.Text;
@@ -43,6 +44,28 @@ public static class CongifurationServicesExtension
         services.InitCaching(builder.Configuration);
 
         services.InitFluentValidators();
+    }
+
+    /// <summary>
+    /// Настройка di MongoDb
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="config"></param>
+    public static void AddMongo(this IServiceCollection services, IConfiguration config)
+    {
+        services.AddSingleton<IMongoClient>(sp =>
+        {
+            var connString = config.GetConnectionString("MongoDb");
+            return new MongoClient(connString);
+        });
+
+        services.AddSingleton<IMongoDatabase>(sp =>
+        {
+            var client = sp.GetRequiredService<IMongoClient>();
+            var databaseName = config["MongoDb:DatabaseName"];
+            return client.GetDatabase(databaseName);
+        });
+
     }
 
     /// <summary>
