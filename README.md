@@ -67,7 +67,7 @@ graph TD
 1. Clone the repo:
 ```
 bash
-git clone https://github.com/yourusername/finances.git
+git clone https://github.com/Miha001/FinanceApp.git
 cd finances
 ```
 2. Ensure Docker Desktop is running.
