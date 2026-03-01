@@ -6,11 +6,9 @@ public class User : IEntityId<Guid>
 
     public User(string name, string passwordHash)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be empty", nameof(name));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
-        if (string.IsNullOrWhiteSpace(passwordHash))
-            throw new ArgumentException("Password hash cannot be empty", nameof(passwordHash));
+        ArgumentNullException.ThrowIfNullOrWhiteSpace(passwordHash, nameof(passwordHash));
 
         Id = Guid.CreateVersion7();
         Name = name;

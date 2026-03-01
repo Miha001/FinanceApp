@@ -12,10 +12,7 @@ public class CurrentUserProvider(IHttpContextAccessor httpContextAccessor) : ICu
         {
             var user = httpContextAccessor.HttpContext?.User;
 
-            if (user == null)
-            {
-                throw new InvalidOperationException("Context user is not available");
-            }
+            ArgumentNullException.ThrowIfNull(user, nameof(user));
 
             var idClaim = user.FindFirst(ClaimTypes.NameIdentifier);
 

@@ -68,11 +68,9 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity>
     /// <summary>
     /// Проверка сущности на null
     /// </summary>
-    /// <param name="entity"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <param name="entity">Проверяемая сущность</param>
     private void ValidateEntityOnNull(TEntity entity)
     {
-        if (entity is null)
-            throw new ArgumentNullException(nameof(entity), "Entity is null");
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
     }
 }

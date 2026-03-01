@@ -21,8 +21,7 @@ public class Currency : IEntityId<Guid>
 
     public void UpdateRate(decimal newRate)
     {
-        if (newRate <= 0)
-            throw new ArgumentException("New rate must be positive.", nameof(newRate));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(newRate, nameof(newRate));
 
         if (Rate == newRate) return;
 
@@ -31,11 +30,9 @@ public class Currency : IEntityId<Guid>
 
     public Currency(string name, decimal rate)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Currency name cannot be empty.", nameof(name));
+        ArgumentException.ThrowIfNullOrWhiteSpace(name, nameof(name));
 
-        if (rate <= 0)
-            throw new ArgumentException("Rate must be positive.", nameof(rate));
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(rate, nameof(rate));
 
         Id = Guid.CreateVersion7();
         Name = name;

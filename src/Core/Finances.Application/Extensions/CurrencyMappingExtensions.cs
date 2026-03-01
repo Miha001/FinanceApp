@@ -7,10 +7,7 @@ public static class CurrencyMappingExtensions
 {
     public static CourseDto ToDto(this Currency currency)
     {
-        if (currency is null)
-        {
-            throw new ArgumentNullException(nameof(currency));
-        }
+        ArgumentNullException.ThrowIfNull(currency, nameof(currency));
 
         return new CourseDto(currency.Id, currency.Name, currency.Rate);
     }

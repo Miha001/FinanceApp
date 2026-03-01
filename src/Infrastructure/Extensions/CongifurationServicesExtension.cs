@@ -123,15 +123,15 @@ public static class CongifurationServicesExtension
 
         var redisSettings = configuration.GetSection(nameof(RedisSettings)).Get<RedisSettings>();
 
-        if (redisSettings == null || string.IsNullOrEmpty(redisSettings.Url))
+        if (redisSettings == null || string.IsNullOrWhiteSpace(redisSettings.Url))
         {
-            throw new ArgumentNullException("Redis settings are not configured properly.");
+            throw new InvalidOperationException("Redis settings are not configured properly.");
         }
 
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = redisSettings.Url;
-            options.InstanceName = redisSettings.InstanceName ?? string.Empty;
+            options.InstanceName = redisSettings.InstanceName ?? "FinancesApp_";
         });
     }
 
