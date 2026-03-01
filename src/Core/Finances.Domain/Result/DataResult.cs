@@ -23,14 +23,4 @@ public class DataResult<T> : BaseResult
 
     public static new DataResult<T> Failure(int errorCode, string errorMessage) =>
         new(default, new Error(errorMessage, errorCode));
-
-    public static DataResult<TokenDto> Failure(int invalidClientRequest1, object invalidClientRequest2)
-    {
-        throw new NotImplementedException();
-    }
-
-    public static DataResult<bool> Failure(bool v, object addToFavoriteFailed)
-    {
-        throw new NotImplementedException();
-    }
 }

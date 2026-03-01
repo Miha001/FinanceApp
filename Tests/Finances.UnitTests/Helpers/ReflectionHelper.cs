@@ -8,7 +8,8 @@ public static class ReflectionHelper
     public static T SetId<T>(this T entity, Guid id)
     {
         var property = typeof(T).GetProperty("Id", BindingFlags.Public | BindingFlags.Instance);
-        if(property is null) throw new ArgumentNullException($"Property Id not found on {nameof(property)}");
+
+        ArgumentNullException.ThrowIfNull(property, nameof(property));
 
         property.SetValue(entity, id);
         return entity;
